@@ -47,56 +47,45 @@
   {
    "id": "wa",
    "name": "和パック",
-   "desc": "墨と和紙・藍染め・金屏風。筆文字と和柄で、とことん和風に",
+   "desc": "縦書きの見出しと短冊のタブ、罫線と余白で組んだ和のデザイン",
    "file": "wa.css",
-   "ver": 1,
+   "ver": 2,
    "themes": [
     {
      "id": "sumi",
-     "name": "墨と和紙",
-     "desc": "和紙に墨の筆文字、朱の落款",
+     "name": "墨",
+     "desc": "生成りの和紙に墨と朱",
      "c": [
-      "#f6efdf",
-      "#1b1b1b",
-      "#c0392b"
+      "#f6f2e9",
+      "#2a2723",
+      "#b4432c"
      ],
-     "font": "family=Yuji+Syuku&family=Shippori+Mincho:wght@500;700"
+     "font": "family=Shippori+Mincho:wght@500;600;700",
+     "kanji": true
     },
     {
-     "id": "aizome",
-     "name": "藍染め",
-     "desc": "藍色の地に麻の葉文様",
+     "id": "ai",
+     "name": "藍",
+     "desc": "藍の縞と朱の差し色",
      "c": [
-      "#1d2c4c",
-      "#f3ecdc",
-      "#d9482b"
+      "#f5f3ee",
+      "#1f2d4d",
+      "#b9472f"
      ],
-     "font": "family=Zen+Old+Mincho:wght@400;700;900",
-     "keepmap": true
+     "font": "family=Shippori+Mincho:wght@500;600;700",
+     "kanji": true
     },
     {
-     "id": "byobu",
-     "name": "金屏風",
-     "desc": "金箔と漆黒、金雲がたなびく",
+     "id": "matcha",
+     "name": "抹茶",
+     "desc": "茶室の抹茶色と麻の葉",
      "c": [
-      "#15110e",
-      "#d8b45c",
-      "#c8321f"
+      "#f4f2e8",
+      "#4a5a32",
+      "#a8432e"
      ],
-     "font": "family=Shippori+Mincho+B1:wght@600;800",
-     "keepmap": true,
-     "fx": {
-      "k": "kinpun",
-      "n": 22,
-      "size": [
-       6,
-       12
-      ],
-      "dur": [
-       12,
-       22
-      ]
-     }
+     "font": "family=Shippori+Mincho:wght@500;600;700",
+     "kanji": true
     }
    ]
   },
@@ -105,7 +94,7 @@
    "name": "シーズンパック",
    "desc": "桜・夏祭り・紅葉・クリスマス・お正月。季節の飾りと演出つき",
    "file": "season.css",
-   "ver": 2,
+   "ver": 3,
    "themes": [
     {
      "id": "sakura",
@@ -192,17 +181,31 @@
     {
      "id": "xmas",
      "name": "クリスマス",
-     "desc": "点滅するイルミネーションと積もる雪",
+     "desc": "揺れるオーナメントと光るツリー、雪と街の灯り",
      "c": [
-      "#1e3b2f",
-      "#c8102e",
-      "#e9c46a"
+      "#a3122a",
+      "#14523b",
+      "#c9a646"
      ],
-     "font": "family=Kaisei+Decol:wght@700&family=M+PLUS+Rounded+1c:wght@400;700",
-     "fx": {
-      "k": "snow",
-      "n": 50
-     },
+     "font": "family=Kaisei+Decol:wght@700&family=M+PLUS+Rounded+1c:wght@400;700&family=Mountains+of+Christmas:wght@700",
+     "fx": [
+      {
+       "k": "snow",
+       "n": 45
+      },
+      {
+       "k": "bokeh",
+       "n": 12,
+       "size": [
+        10,
+        22
+       ],
+       "dur": [
+        12,
+        22
+       ]
+      }
+     ],
      "months": [
       11,
       12
@@ -211,7 +214,7 @@
     {
      "id": "newyear",
      "name": "お正月",
-     "desc": "初日の出・門松・梅、金粉が舞う",
+     "desc": "青海波と門松、水引、金粉が舞う",
      "c": [
       "#c3272b",
       "#fffbf2",

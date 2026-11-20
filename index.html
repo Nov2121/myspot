@@ -298,10 +298,11 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .pk-sw{display:flex;gap:8px;margin-bottom:6px}.pk-sw span{display:flex}.pk-sw i{width:14px;height:14px;border-radius:50%;margin-right:-4px;border:1.5px solid var(--card)}
 :where(:root[data-ui]) button,:where(:root[data-ui]) a{color:inherit}
 /* 季節の演出（雪・花びら） */
-#fx{position:fixed;inset:0;pointer-events:none;z-index:900;overflow:hidden}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:500;overflow:hidden}#fx .fxl{position:absolute;inset:0}
+@media(min-width:761px){#fx{left:360px}}
 #fx i{position:absolute;top:-24px;animation:fxfall linear infinite;will-change:transform}
-#fx.snow i{width:var(--s);height:var(--s);border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(30,59,47,.35);opacity:.9}
-#fx.petal i{width:calc(var(--s) * 1.3);height:var(--s);background:#f7b3c7;border-radius:100% 0 100% 0;opacity:.85}
+#fx .snow i{width:var(--s);height:var(--s);border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(30,59,47,.35);opacity:.9}
+#fx .petal i{width:calc(var(--s) * 1.3);height:var(--s);background:#f7b3c7;border-radius:100% 0 100% 0;opacity:.85}
 @keyframes fxfall{to{transform:translate(var(--dx),calc(100vh + 40px)) rotate(var(--r))}}
 @media (prefers-reduced-motion:reduce){#fx{display:none}:root[data-ui="pixel"] .head h1:before{animation:none}}
 .tgrp{font-size:12px;font-weight:700;color:var(--mute);margin:12px 0 6px;letter-spacing:.06em}.tgrp:first-of-type{margin-top:0}
@@ -321,7 +322,7 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 :root.wx-night #map{background:#101a33}
 :root.wx-night .spin>svg{filter:drop-shadow(0 0 7px rgba(255,214,140,.75))}
 :root.wx-night .leaflet-control-attribution{background:rgba(16,26,51,.8)!important;color:#aab6d6}
-#wx.night.sun:after,#wx.night.cloud:after{background:radial-gradient(circle at calc(100% - 64px) 74px,#fffbe6 0 15px,rgba(255,244,200,.45) 16px 24px,rgba(255,244,200,.12) 25px 60px,transparent 90px)}
+#wx.night.sun:after,#wx.night.cloud:after{background:radial-gradient(circle at 42% 150px,#fffbe6 0 13px,rgba(255,244,200,.4) 14px 20px,rgba(255,244,200,.1) 21px 50px,transparent 76px)}
 #wx.night.sun:before,#wx.night.cloud:before{opacity:.9;background:radial-gradient(1.4px 1.4px at 12% 8%,#fff 98%,transparent),radial-gradient(1px 1px at 22% 18%,#fff 98%,transparent),radial-gradient(1.6px 1.6px at 35% 6%,#fff 98%,transparent),radial-gradient(1px 1px at 48% 14%,#fff 98%,transparent),radial-gradient(1.3px 1.3px at 58% 4%,#fff 98%,transparent),radial-gradient(1px 1px at 67% 20%,#fff 98%,transparent),radial-gradient(1.5px 1.5px at 76% 10%,#fff 98%,transparent),radial-gradient(1px 1px at 8% 24%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 42% 26%,#fff 98%,transparent),radial-gradient(1px 1px at 88% 28%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 28% 32%,#fff 98%,transparent),radial-gradient(1px 1px at 62% 34%,#fff 98%,transparent),linear-gradient(180deg,rgba(10,18,48,.35),transparent 40%);animation:twinkle 4s ease-in-out infinite alternate}
 #wx.night.cloud:before{opacity:.45}
 @keyframes twinkle{from{opacity:.55}to{opacity:1}}
@@ -427,7 +428,7 @@ let sheetOpen=false;
 function setTab(t){document.querySelectorAll(".tabs [data-tab]").forEach(b=>{const on=b.dataset.tab===t;b.classList.toggle("on",on);b.setAttribute("aria-selected",on)});document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.dataset.pane===t));$("panes").scrollTop=0}
 document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b){setTab(b.dataset.tab);if(isMobile()&&!sheetOpen)setSheet(true)}});
 function setSheet(o){sheetOpen=o;$("side").classList.toggle("open",o);$("grab").setAttribute("aria-expanded",o);if(o)closeCard();drawGrab()}
-function drawGrab(){$("grab").innerHTML='<span><b>'+S.spots.length+'</b>件のスポット　<span class="gs">'+(sheetOpen?'▼ 地図にもどる':'▲ 一覧・設定')+'</span></span>'}
+function drawGrab(){$("grab").innerHTML='<span><b>'+fmtN(S.spots.length)+'</b>件のスポット　<span class="gs">'+(sheetOpen?'▼ 地図にもどる':'▲ 一覧・設定')+'</span></span>'}
 $("grab").addEventListener("click",()=>setSheet(!sheetOpen));
 (()=>{let y0=null;const g=$("grab");g.addEventListener("touchstart",e=>{y0=e.touches[0].clientY},{passive:true});g.addEventListener("touchend",e=>{if(y0==null)return;const dy=e.changedTouches[0].clientY-y0;if(dy<-40)setSheet(true);else if(dy>40)setSheet(false);y0=null},{passive:true})})();
 function openPanel(tab){setTab(tab);if(isMobile())setSheet(true)}
@@ -443,7 +444,7 @@ async function revGeo(lat,lng){try{const r=await fetch(NOMI+"reverse?format=json
 function setLoc(p,addr){const f=form;if(!f)return;f.lat=p.lat;f.lng=p.lng;f.addr=addr||"住所を調べています…";showTmp(p);if(!addr){revGeo(p.lat,p.lng).then(t=>{if(form===f&&f.lat===p.lat&&f.addr==="住所を調べています…"){f.addr=t||"地図で指定した場所";if(document.querySelector("#pList .where")){readForm();drawForm()}}})}}
 
 function drawList(){
-  $("tot").textContent=S.spots.length;drawGrab();
+  $("tot").textContent=fmtN(S.spots.length);drawGrab();
   if(form)return drawForm();
   const used=S.cats.filter(c=>S.spots.some(s=>s.cat===c[0]));
   if(filter.cat&&!used.some(c=>c[0]===filter.cat))filter.cat="";
@@ -680,13 +681,18 @@ function delPack(id){
   if((pk.themes||[]).some(t=>t.id===S.ui))applyTheme("");
   delete S.packs[id];save();installPacks();drawSet();drawAll();toast("「"+pk.name+"」を外しました")
 }
-// 季節の演出：fx は "snow" のような名前、または {k:"leaf",n:30,size:[10,20],dur:[8,16]}（パック側のCSSで見た目を決める）
+// 季節の演出：fx は "snow"、{k:"leaf",n:30,size:[10,20],dur:[8,16]}、またはその配列（重ねがけ）。見た目はパック側のCSS（#fx .種類 i）で決める
 function setFx(f){let el=$("fx");if(!f){if(el)el.remove();return}
-  const o=typeof f==="string"?{k:f}:f,D={snow:{n:40,size:[3,8],dur:[8,18]},petal:{n:24,size:[7,13],dur:[8,18]}}[o.k]||{},n=o.n||D.n||24,sz=o.size||D.size||[8,16],du=o.dur||D.dur||[8,18],key=JSON.stringify(o);
+  const L=(Array.isArray(f)?f:[f]).map(x=>typeof x==="string"?{k:x}:x),key=JSON.stringify(L);
   if(!el){el=document.createElement("div");el.id="fx";el.setAttribute("aria-hidden","true");document.body.appendChild(el)}
-  if(el.dataset.key===key)return;el.dataset.key=key;el.className=o.k;let h="";const R=(a,b)=>a+Math.random()*(b-a);
-  for(let i=0;i<n;i++){const d=R(du[0],du[1]);h+='<i style="left:'+R(-3,100).toFixed(1)+'%;--s:'+R(sz[0],sz[1]).toFixed(1)+'px;--dx:'+R(-90,90).toFixed(0)+'px;--r:'+((Math.random()>.5?1:-1)*R(300,720)).toFixed(0)+'deg;--a:'+Math.random().toFixed(3)+';--b:'+Math.random().toFixed(3)+';--c:'+Math.random().toFixed(3)+';animation-duration:'+d.toFixed(2)+'s;animation-delay:-'+R(0,d).toFixed(2)+'s"></i>'}
-  el.innerHTML=h}
+  if(el.dataset.key===key)return;el.dataset.key=key;const R=(a,b)=>a+Math.random()*(b-a);
+  el.innerHTML=L.map(o=>{const D={snow:{n:40,size:[3,8],dur:[8,18]},petal:{n:24,size:[7,13],dur:[8,18]}}[o.k]||{},n=o.n||D.n||24,sz=o.size||D.size||[8,16],du=o.dur||D.dur||[8,18];let h="";
+    for(let i=0;i<n;i++){const d=R(du[0],du[1]);h+='<i style="left:'+R(-3,100).toFixed(1)+'%;--s:'+R(sz[0],sz[1]).toFixed(1)+'px;--dx:'+R(-90,90).toFixed(0)+'px;--r:'+((Math.random()>.5?1:-1)*R(300,720)).toFixed(0)+'deg;--a:'+Math.random().toFixed(3)+';--b:'+Math.random().toFixed(3)+';--c:'+Math.random().toFixed(3)+';animation-duration:'+d.toFixed(2)+'s;animation-delay:-'+R(0,d).toFixed(2)+'s"></i>'}
+    return '<div class="fxl '+o.k+'">'+h+'</div>'}).join("")}
+// 数字の表示（和のデザインでは漢数字）
+function fmtN(n){const th=THEMES.find(x=>x.id===S.ui);if(!(th&&th.kanji))return String(n);
+  const D="〇一二三四五六七八九";if(n===0)return "〇";let out="";const u=[["千",1000],["百",100],["十",10]];
+  for(const [c,v] of u){const k=Math.floor(n/v);if(k){out+=(k>1?D[k]:"")+c;n%=v}}if(n)out+=D[n];return out}
 function applyTheme(id){
   if(id==="paper")id="vintage";
   S.ui=id;if(id)document.documentElement.dataset.ui=id;else delete document.documentElement.dataset.ui;
