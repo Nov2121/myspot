@@ -1,0 +1,77 @@
+/* マイスポット 拡張パック：振り切りパック */
+/* D ネオン夜市 */
+:root[data-ui="neon"]{--bg:#0b0a18;--panel:#12102a;--card:#1a1636;--ink:#f3f0ff;--mute:#9d95cc;--line:#2c2758;--surf:#1a1636;--soft:#241d4a;--acc:#ff3fa4;--acc-d:#ff7cc4;--want:#ff3fa4;--went:#2de2e6;--route:#f9f871;--chip:#d9d4ff;color-scheme:dark}
+:root[data-ui="neon"] body{font-family:"RocknRoll One","Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg)}
+:root[data-ui="neon"] #map{background:#0b0a18}
+:root[data-ui="neon"] .leaflet-tile-pane{filter:invert(1) hue-rotate(195deg) brightness(.78) contrast(1.2) saturate(.55)}
+:root[data-ui="neon"] h1{color:#fff;text-shadow:0 0 4px #fff,0 0 10px #ff3fa4,0 0 22px #ff3fa4;letter-spacing:.06em}
+:root[data-ui="neon"] .total b{color:#2de2e6;text-shadow:0 0 8px #2de2e6}
+:root[data-ui="neon"] aside{box-shadow:1px 0 0 #2c2758,0 0 30px rgba(255,63,164,.15)}
+:root[data-ui="neon"] .tabs{background:#0f0d22}:root[data-ui="neon"] .tabs button{color:var(--mute)}:root[data-ui="neon"] .tabs button.on{background:#241d4a;color:#fff;box-shadow:0 0 0 1px #ff3fa4,0 0 12px rgba(255,63,164,.5)}
+:root[data-ui="neon"] .bigbtn,:root[data-ui="neon"] .acts .pri,:root[data-ui="neon"] #pickbar{background:rgba(255,63,164,.12);border:2px solid #ff3fa4;color:#fff;text-shadow:0 0 6px #ff3fa4;box-shadow:0 0 10px #ff3fa4,inset 0 0 10px rgba(255,63,164,.6)}
+:root[data-ui="neon"] .btn,:root[data-ui="neon"] .acts>*,:root[data-ui="neon"] .rb button,:root[data-ui="neon"] .rb a{border-color:#3b3473;color:var(--ink)}
+:root[data-ui="neon"] .chips button{border-color:#3b3473}
+:root[data-ui="neon"] .chips button.on{background:transparent;border-color:#2de2e6;color:#fff;box-shadow:0 0 8px #2de2e6,inset 0 0 6px rgba(45,226,230,.5)}
+:root[data-ui="neon"] .seg{background:#0f0d22}
+:root[data-ui="neon"] .tag{text-shadow:0 0 6px currentColor;box-shadow:0 0 6px currentColor}:root[data-ui="neon"] .tag.went{color:#0b0a18;text-shadow:none}
+:root[data-ui="neon"] .seg button.on[data-c="went"],:root[data-ui="neon"] .seg button.on[data-fs="went"],:root[data-ui="neon"] .seg button.on[data-st="went"]{color:#0b0a18}
+:root[data-ui="neon"] #card,:root[data-ui="neon"] .legend,:root[data-ui="neon"] .sbox,:root[data-ui="neon"] .sres{border:1px solid #3b3473;box-shadow:0 0 0 1px rgba(255,63,164,.35),0 0 24px rgba(255,63,164,.25)}
+:root[data-ui="neon"] .form input,:root[data-ui="neon"] .form textarea,:root[data-ui="neon"] select.sel{background:#0f0d22;border-color:#3b3473}
+:root[data-ui="neon"] .spin>svg{filter:drop-shadow(0 0 5px var(--want))}:root[data-ui="neon"] .spin.went>svg{filter:drop-shadow(0 0 5px var(--went))}
+:root[data-ui="neon"] .spin span{background:#12102a}
+:root[data-ui="neon"] .spin b{color:#0b0a18}
+:root[data-ui="neon"] .leaflet-bar a,:root[data-ui="neon"] .leaflet-control-layers{background:#1a1636!important;color:#f3f0ff!important;border-color:#2c2758!important}
+:root[data-ui="neon"] .leaflet-control-attribution{background:rgba(18,16,42,.8)!important;color:#9d95cc}:root[data-ui="neon"] .leaflet-control-attribution a{color:#2de2e6}
+:root[data-ui="neon"] .pinlbl{background:#1a1636;color:#fff}
+:root[data-ui="neon"] .grab:before{background:#ff3fa4;box-shadow:0 0 8px #ff3fa4}
+:root[data-ui="neon"] .ci{stroke:#2de2e6;stroke-width:1.6;filter:drop-shadow(0 0 2px #2de2e6)}
+:root[data-ui="neon"] .ci .f{fill:rgba(255,63,164,.35);stroke:#ff3fa4}:root[data-ui="neon"] .ci .f2{fill:rgba(249,248,113,.35);stroke:#f9f871}
+/* E ZINE（コピー誌） */
+:root[data-ui="zine"]{--bg:#e9e5da;--panel:#f6f3ea;--card:#fbfaf5;--ink:#141414;--mute:#4f4b45;--line:#c9c3b6;--surf:#ece7db;--soft:#ffe6f2;--acc:#ff48b0;--acc-d:#c40f74;--want:#ff48b0;--went:#0078bf;--route:#141414;--chip:#141414;--hand:255px 18px 225px 18px/18px 225px 18px 255px}
+:root[data-ui="zine"] body{font-family:"Zen Kurenaido","Yomogi","Klee One","Noto Sans JP",sans-serif}
+:root[data-ui="zine"] aside{background-color:var(--panel);background-image:radial-gradient(rgba(0,0,0,.07) .8px,transparent 1px);background-size:4px 4px}
+:root[data-ui="zine"] h1,:root[data-ui="zine"] .ch h3,:root[data-ui="zine"] .total b,:root[data-ui="zine"] .empty b{font-family:"Dela Gothic One","Noto Sans JP",sans-serif!important;font-weight:400!important}
+:root[data-ui="zine"] h1{font-size:24px;display:inline;background:linear-gradient(transparent 55%,#ffe800 55%,#ffe800 92%,transparent 92%);transform:rotate(-2deg);display:inline-block}
+:root[data-ui="zine"] .total b{color:var(--acc);text-shadow:2px 2px 0 #0078bf}
+:root[data-ui="zine"] .leaflet-tile-pane{filter:grayscale(1) contrast(1.55) brightness(1.08)}
+:root[data-ui="zine"] .tabs{background:none;padding:0;gap:6px}:root[data-ui="zine"] .tabs button{border:2px solid var(--ink);border-radius:var(--hand);background:var(--card)}:root[data-ui="zine"] .tabs button.on{background:var(--ink);color:#fff;box-shadow:none;transform:rotate(-1.5deg)}
+:root[data-ui="zine"] .bigbtn{border:2.5px solid var(--ink);border-radius:var(--hand);box-shadow:4px 4px 0 #0078bf;font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.04em}
+:root[data-ui="zine"] .btn,:root[data-ui="zine"] .acts>*,:root[data-ui="zine"] .chips button,:root[data-ui="zine"] .rb button,:root[data-ui="zine"] .rb a,:root[data-ui="zine"] .form input,:root[data-ui="zine"] .form textarea{border:2px solid var(--ink)!important;border-radius:var(--hand)!important}
+:root[data-ui="zine"] .chips button.on{background:#0078bf;color:#fff;transform:rotate(-2deg)}
+:root[data-ui="zine"] .acts .pri{background:var(--ink);color:#fff}
+:root[data-ui="zine"] .seg{border:2px solid var(--ink);border-radius:var(--hand);background:var(--card)}
+:root[data-ui="zine"] .tag{border-width:2px;border-radius:2px;transform:rotate(3deg);background:#fff}:root[data-ui="zine"] .list li:nth-child(even) .tag{transform:rotate(-3deg)}
+:root[data-ui="zine"] .tag.went{background:#0078bf}
+:root[data-ui="zine"] #card{border:2.5px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 rgba(20,20,20,.85);transform:rotate(-.6deg);padding-top:10px}
+:root[data-ui="zine"] #card:before{content:"";position:absolute;top:2px;left:50%;width:96px;height:22px;margin-left:-48px;background:rgba(255,232,0,.6);transform:rotate(-4deg);z-index:2}
+:root[data-ui="zine"] .legend,:root[data-ui="zine"] .sbox,:root[data-ui="zine"] .sres{border:2px solid var(--ink);border-radius:4px;box-shadow:4px 4px 0 var(--ink)}
+:root[data-ui="zine"] .list .ic,:root[data-ui="zine"] .cic,:root[data-ui="zine"] .catedit li .cei{background:#fff;border:2px solid var(--ink);border-radius:50%}
+:root[data-ui="zine"] .empty{border:2px dashed var(--ink);background:var(--card)}
+:root[data-ui="zine"] .spin>svg path{stroke:#141414}
+:root[data-ui="zine"] .ci{stroke:#141414;stroke-width:1.9}:root[data-ui="zine"] .ci .f{fill:#ff48b0;mix-blend-mode:multiply}:root[data-ui="zine"] .ci .f2{fill:#0078bf;mix-blend-mode:multiply}:root[data-ui="zine"] .ci .w{fill:#ffe800}
+/* F 8bitドット */
+:root[data-ui="pixel"]{--bg:#1d2b53;--panel:#fff1e8;--card:#fff1e8;--ink:#1d2b53;--mute:#5f574f;--line:#c2c3c7;--surf:#f6e2d1;--soft:#ffd9b5;--acc:#ff004d;--acc-d:#7e2553;--want:#ff004d;--went:#29adff;--route:#ffa300;--chip:#1d2b53}
+:root[data-ui="pixel"] body,:root[data-ui="pixel"] button,:root[data-ui="pixel"] input,:root[data-ui="pixel"] textarea{font-family:"DotGothic16","Noto Sans JP",monospace!important}
+:root[data-ui="pixel"] aside *,:root[data-ui="pixel"] #card,:root[data-ui="pixel"] #card *,:root[data-ui="pixel"] .sbox,:root[data-ui="pixel"] .sres,:root[data-ui="pixel"] .legend,:root[data-ui="pixel"] .fab{border-radius:0!important}
+:root[data-ui="pixel"] .leaflet-tile-pane{filter:saturate(1.5) contrast(1.15);image-rendering:pixelated}
+:root[data-ui="pixel"] .head{background:#1d2b53;margin:0 0 12px;padding:18px 20px 14px;border-bottom:4px solid #000}
+:root[data-ui="pixel"] .head h1{color:#fff1e8;text-shadow:3px 3px 0 #ff004d;font-weight:400;letter-spacing:.08em}
+:root[data-ui="pixel"] .head h1:before{content:"▶";color:#ffec27;margin-right:8px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+:root[data-ui="pixel"] .head p{color:#c2c3c7}
+:root[data-ui="pixel"] .total b{color:#ffec27;font-family:"DotGothic16",monospace;font-weight:400}:root[data-ui="pixel"] .total span{color:#fff1e8}
+:root[data-ui="pixel"] .tabs{background:none;padding:0;gap:6px}:root[data-ui="pixel"] .tabs button{border:3px solid var(--ink);background:var(--card)}:root[data-ui="pixel"] .tabs button.on{background:var(--ink);color:#fff1e8;box-shadow:none}
+:root[data-ui="pixel"] .bigbtn{border:3px solid #000;box-shadow:4px 4px 0 #000;font-weight:400;letter-spacing:.1em}
+:root[data-ui="pixel"] .bigbtn:active{transform:translate(4px,4px);box-shadow:none}
+:root[data-ui="pixel"] .btn,:root[data-ui="pixel"] .acts>*,:root[data-ui="pixel"] .chips button,:root[data-ui="pixel"] .rb button,:root[data-ui="pixel"] .rb a,:root[data-ui="pixel"] .form input,:root[data-ui="pixel"] .form textarea,:root[data-ui="pixel"] .seg,:root[data-ui="pixel"] .themes button,:root[data-ui="pixel"] .emojis button{border:3px solid var(--ink)!important;box-shadow:3px 3px 0 var(--ink)}
+:root[data-ui="pixel"] .chips button.on{background:var(--ink);color:#fff1e8}
+:root[data-ui="pixel"] .acts .pri{background:#008751;color:#fff;border-color:#000!important}
+:root[data-ui="pixel"] .tag{border-width:2px;font-weight:400}
+:root[data-ui="pixel"] #card,:root[data-ui="pixel"] .legend,:root[data-ui="pixel"] .sbox,:root[data-ui="pixel"] .sres{border:4px solid var(--ink);box-shadow:6px 6px 0 rgba(0,0,0,.6)}
+:root[data-ui="pixel"] .fab{border:3px solid #000;box-shadow:3px 3px 0 #000}
+:root[data-ui="pixel"] .list .ic,:root[data-ui="pixel"] .cic,:root[data-ui="pixel"] .catedit li .cei{background:#fff;border:2px solid var(--ink)}
+:root[data-ui="pixel"] .spin span{border-radius:0}
+:root[data-ui="pixel"] .spin>svg path{stroke:#000;stroke-width:2.5;stroke-linejoin:miter}
+:root[data-ui="pixel"] .ci{stroke:#1d2b53;stroke-width:2.3;stroke-linecap:square;stroke-linejoin:miter;shape-rendering:crispEdges}
+:root[data-ui="pixel"] .ci .f{fill:#ff004d}:root[data-ui="pixel"] .ci .f2{fill:#ffa300}:root[data-ui="pixel"] .ci .w{fill:#fff}
+:root[data-ui="pixel"] #toast{border-radius:0;border:3px solid #fff1e8;background:#1d2b53;font-family:"DotGothic16",monospace}

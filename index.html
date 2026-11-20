@@ -307,8 +307,8 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .tgrp{font-size:12px;font-weight:700;color:var(--mute);margin:12px 0 6px;letter-spacing:.06em}.tgrp:first-of-type{margin-top:0}
 .themes .sw3 .now{font-style:normal;font-size:10px;font-weight:700;background:var(--acc);color:#fff;border-radius:4px;padding:1px 5px;margin-left:auto;line-height:14px}
 /* 天気 */
-.wxchip{display:flex;align-items:center;gap:6px;margin-top:6px;background:var(--panel);color:var(--ink);border:0;border-radius:999px;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.14);font-size:13px;width:max-content;max-width:100%;cursor:default}
-.wxchip[hidden]{display:none}.wxchip b{font-weight:800}.wxchip small{color:var(--mute);font-size:11px}
+.wxchip{display:flex;align-items:center;gap:6px;margin-top:6px;background:var(--panel);color:var(--ink);border:0;border-radius:999px;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.14);font-size:13px;width:max-content;max-width:100%;min-height:36px}
+.wxchip{cursor:pointer}.wxchip[hidden]{display:none}.wxchip em{font-style:normal;font-size:10px;font-weight:700;border:1px solid var(--line);color:var(--mute);border-radius:999px;padding:1px 7px;margin-left:2px}.wxchip em.on{background:var(--acc);border-color:var(--acc);color:#fff}.wxchip.off{opacity:.85}.wxchip.off span{color:var(--mute)}.wxchip b{font-weight:800}.wxchip small{color:var(--mute);font-size:11px}
 #wx{position:absolute;inset:0;z-index:450;pointer-events:none;overflow:hidden}
 #wx:before,#wx:after{content:"";position:absolute;inset:0;pointer-events:none}
 #wx.sun:after{background:radial-gradient(circle at 88% -6%,rgba(255,206,110,.42),rgba(255,206,110,.12) 28%,transparent 55%)}
@@ -316,9 +316,18 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 #wx.rain:after,#wx.heavy:after,#wx.storm:after{background:linear-gradient(180deg,rgba(70,90,120,.25),rgba(70,90,120,.1))}
 #wx.fog:after{background:linear-gradient(90deg,rgba(238,240,244,.15),rgba(238,240,244,.6),rgba(238,240,244,.2));background-size:200% 100%;animation:fog 18s ease-in-out infinite alternate}
 @keyframes fog{to{background-position:100% 0}}
-#wx.night:before{background:rgba(12,22,64,.32);mix-blend-mode:multiply}
+/* 夜：暗くするのではなく「夜の地図」に切り替え、月と星、ピンに灯り */
+:root.wx-night .leaflet-tile-pane{filter:invert(1) hue-rotate(205deg) brightness(1.02) contrast(.92) saturate(.6)!important}
+:root.wx-night #map{background:#101a33}
+:root.wx-night .spin>svg{filter:drop-shadow(0 0 7px rgba(255,214,140,.75))}
+:root.wx-night .leaflet-control-attribution{background:rgba(16,26,51,.8)!important;color:#aab6d6}
+#wx.night.sun:after,#wx.night.cloud:after{background:radial-gradient(circle at calc(100% - 64px) 74px,#fffbe6 0 15px,rgba(255,244,200,.45) 16px 24px,rgba(255,244,200,.12) 25px 60px,transparent 90px)}
+#wx.night.sun:before,#wx.night.cloud:before{opacity:.9;background:radial-gradient(1.4px 1.4px at 12% 8%,#fff 98%,transparent),radial-gradient(1px 1px at 22% 18%,#fff 98%,transparent),radial-gradient(1.6px 1.6px at 35% 6%,#fff 98%,transparent),radial-gradient(1px 1px at 48% 14%,#fff 98%,transparent),radial-gradient(1.3px 1.3px at 58% 4%,#fff 98%,transparent),radial-gradient(1px 1px at 67% 20%,#fff 98%,transparent),radial-gradient(1.5px 1.5px at 76% 10%,#fff 98%,transparent),radial-gradient(1px 1px at 8% 24%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 42% 26%,#fff 98%,transparent),radial-gradient(1px 1px at 88% 28%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 28% 32%,#fff 98%,transparent),radial-gradient(1px 1px at 62% 34%,#fff 98%,transparent),linear-gradient(180deg,rgba(10,18,48,.35),transparent 40%);animation:twinkle 4s ease-in-out infinite alternate}
+#wx.night.cloud:before{opacity:.45}
+@keyframes twinkle{from{opacity:.55}to{opacity:1}}
+#wx.night.rain i,#wx.night.heavy i,#wx.night.storm i{background:linear-gradient(transparent,rgba(190,210,255,.8))}
 #wx.storm:before{background:#fff;opacity:0;animation:flash 7s infinite}
-#wx.storm.night:before{background:#fff}
+
 @keyframes flash{0%,91%,95%,100%{opacity:0}92%{opacity:.55}93%{opacity:.08}94%{opacity:.4}}
 #wx i{position:absolute;top:-30px;animation:drop linear infinite}
 #wx.rain i,#wx.heavy i,#wx.storm i{width:1.5px;height:18px;background:linear-gradient(transparent,rgba(70,110,170,.85));transform:rotate(12deg)}
@@ -602,7 +611,7 @@ const BASE_THEMES=[
   {id:"vintage",grp:"ベーシック",name:"A ヴィンテージ古着",desc:"赤×デニムのアメリカン・ヴィンテージ",c:["#f2e8d8","#c94b43","#355c7d"],font:"family=M+PLUS+1p:wght@500;700;800"},
   {id:"retro",grp:"ベーシック",name:"B レトロ喫茶",desc:"70年代のオレンジ×こげ茶、丸い文字",c:["#f4e1b9","#e8843a","#7a4a28"],font:"family=Zen+Maru+Gothic:wght@500;700;900&family=M+PLUS+Rounded+1c:wght@400;500;700"},
   {id:"mono",grp:"ベーシック",name:"C モノトーン",desc:"白黒と真鍮のセレクトショップ風",c:["#ffffff","#1a1a1a","#b08d57"]},
-  {id:"dark",grp:"ベーシック",name:"ダーク",desc:"夜や暗い場所で見やすい黒基調",c:["#16191f","#e8eaed","#3cc4ad"]}];
+  {id:"dark",grp:"ベーシック",name:"ダーク",desc:"夜や暗い場所で見やすい黒基調",c:["#16191f","#e8eaed","#3cc4ad"],keepmap:true}];
 let THEMES=BASE_THEMES.slice();
 const THEME_TC={vintage:"#2b4767",retro:"#e8843a",mono:"#1a1a1a",dark:"#16191f"};
 
@@ -624,15 +633,18 @@ function wxUpdate(){
   wxT=setTimeout(async()=>{
     const chip=$("wxchip");if(!chip)return;
     let z=12,c={lat:34.69,lng:135.5};try{z=map.getZoom();c=map.getCenter()}catch(e){}
-    if(!S.wx||z<8){chip.hidden=true;setWxFx(null);return}
+    if(z<8){chip.hidden=true;setWxFx(null);return}
+    if(!S.wx){chip.hidden=false;chip.className="wxchip off";chip.innerHTML='<b>☂</b><span>天気 OFF</span><em>タップでON</em>';chip.title="";setWxFx(null);return}
     const my=++wxSeq;const w=await getWx(c.lat,c.lng);if(my!==wxSeq)return;
     if(!w){chip.hidden=true;setWxFx(null);return}
-    chip.hidden=false;chip.innerHTML='<b>'+w.icon+'</b><span>'+esc(w.label)+'</span><b>'+w.temp+'℃</b><small>地図の中心付近・いま</small>';
+    chip.hidden=false;chip.className="wxchip";chip.innerHTML='<b>'+w.icon+'</b><span>'+esc(w.label)+'</span><b>'+w.temp+'℃</b><small>地図の中心付近・いま</small><em class="'+(S.wxfx?'on':'')+'">演出 '+(S.wxfx?'ON':'OFF')+'</em>';
     chip.title="風 "+w.wind+"m/s"+(w.precip>0?"／降水 "+w.precip+"mm":"")+"（Open-Meteo）";
     setWxFx(S.wxfx?w:null);
   },700);
 }
 function setWxFx(w){
+  const th=THEMES.find(x=>x.id===S.ui);
+  document.documentElement.classList.toggle("wx-night",!!(w&&!w.day&&!(th&&th.keepmap)));
   let el=$("wx");
   if(!w){if(el)el.remove();return}
   if(!el){el=document.createElement("div");el.id="wx";el.setAttribute("aria-hidden","true");$("map").appendChild(el)}
@@ -668,15 +680,17 @@ function delPack(id){
   if((pk.themes||[]).some(t=>t.id===S.ui))applyTheme("");
   delete S.packs[id];save();installPacks();drawSet();drawAll();toast("「"+pk.name+"」を外しました")
 }
-function setFx(kind){let el=$("fx");if(!kind){if(el)el.remove();return}
+// 季節の演出：fx は "snow" のような名前、または {k:"leaf",n:30,size:[10,20],dur:[8,16]}（パック側のCSSで見た目を決める）
+function setFx(f){let el=$("fx");if(!f){if(el)el.remove();return}
+  const o=typeof f==="string"?{k:f}:f,D={snow:{n:40,size:[3,8],dur:[8,18]},petal:{n:24,size:[7,13],dur:[8,18]}}[o.k]||{},n=o.n||D.n||24,sz=o.size||D.size||[8,16],du=o.dur||D.dur||[8,18],key=JSON.stringify(o);
   if(!el){el=document.createElement("div");el.id="fx";el.setAttribute("aria-hidden","true");document.body.appendChild(el)}
-  if(el.className===kind)return;el.className=kind;let h="";
-  for(let i=0;i<(kind==="snow"?36:22);i++){const d=8+Math.random()*10;h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;--s:'+(kind==="snow"?3+Math.random()*5:7+Math.random()*6).toFixed(1)+'px;--dx:'+((Math.random()-.5)*160).toFixed(0)+'px;--r:'+(kind==="snow"?0:(Math.random()>.5?1:-1)*(360+Math.random()*360)).toFixed(0)+'deg;animation-duration:'+d.toFixed(1)+'s;animation-delay:-'+(Math.random()*d).toFixed(1)+'s"></i>'}
+  if(el.dataset.key===key)return;el.dataset.key=key;el.className=o.k;let h="";const R=(a,b)=>a+Math.random()*(b-a);
+  for(let i=0;i<n;i++){const d=R(du[0],du[1]);h+='<i style="left:'+R(-3,100).toFixed(1)+'%;--s:'+R(sz[0],sz[1]).toFixed(1)+'px;--dx:'+R(-90,90).toFixed(0)+'px;--r:'+((Math.random()>.5?1:-1)*R(300,720)).toFixed(0)+'deg;--a:'+Math.random().toFixed(3)+';--b:'+Math.random().toFixed(3)+';--c:'+Math.random().toFixed(3)+';animation-duration:'+d.toFixed(2)+'s;animation-delay:-'+R(0,d).toFixed(2)+'s"></i>'}
   el.innerHTML=h}
 function applyTheme(id){
   if(id==="paper")id="vintage";
   S.ui=id;if(id)document.documentElement.dataset.ui=id;else delete document.documentElement.dataset.ui;
-  const th=THEMES.find(x=>x.id===id);setFx(th&&th.fx);
+  const th=THEMES.find(x=>x.id===id);setFx(th&&th.fx);if(typeof wxUpdate==="function"){const e=$("wx");if(e)e.className="";wxUpdate()}
   const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.content=THEME_TC[id]||(th&&id?th.c[0]:"#1f8a7a");
   const t=THEMES.find(x=>x.id===id);
   if(t&&t.font&&!document.getElementById("font-"+id)){const l=document.createElement("link");l.id="font-"+id;l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?"+t.font+"&display=swap";document.head.appendChild(l)}
@@ -776,6 +790,11 @@ function locate(){navigator.geolocation.getCurrentPosition(p=>{const ll=[p.coord
 function drawAll(){drawList();drawRoute();drawMarkers()}
 installPacks();if(!THEMES.some(t=>t.id===S.ui))S.ui="";applyTheme(S.ui);drawAll();drawSet();
 try{map.on("moveend",wxUpdate);map.attributionControl&&map.attributionControl.addAttribution('天気 <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>')}catch(e){}
+$("wxchip").addEventListener("click",()=>{
+  if(!S.wx){S.wx=true;S.wxfx=true;toast("天気と演出をONにしました")}
+  else if(S.wxfx){S.wxfx=false;toast("演出をOFFにしました（天気の表示は残ります）")}
+  else{S.wx=false;toast("天気をOFFにしました。もう一度タップでON")}
+  save();wxUpdate();if($("pList").querySelector("[data-wx]"))drawSet();if(selId)openCard(selId)});
 wxUpdate();setInterval(()=>{if(!document.hidden)wxUpdate()},10*60*1000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)wxUpdate()});
 // 別の端末から送られたリンク（#sp=...）

@@ -1,0 +1,241 @@
+{
+ "version": 1,
+ "packs": [
+  {
+   "id": "street",
+   "name": "振り切りパック",
+   "desc": "ネオン夜市・ZINE・8bitドット。思いきり遊んだデザイン",
+   "file": "street.css",
+   "ver": 2,
+   "themes": [
+    {
+     "id": "neon",
+     "name": "ネオン夜市",
+     "desc": "夜の地図に光るネオン管",
+     "c": [
+      "#0b0a18",
+      "#ff3fa4",
+      "#2de2e6"
+     ],
+     "font": "family=RocknRoll+One",
+     "keepmap": true
+    },
+    {
+     "id": "zine",
+     "name": "ZINE",
+     "desc": "コピー誌風。手書き文字とマステ",
+     "c": [
+      "#f6f3ea",
+      "#ff48b0",
+      "#0078bf"
+     ],
+     "font": "family=Dela+Gothic+One&family=Zen+Kurenaido"
+    },
+    {
+     "id": "pixel",
+     "name": "8bitドット",
+     "desc": "レトロゲームのドット絵",
+     "c": [
+      "#1d2b53",
+      "#ff004d",
+      "#ffa300"
+     ],
+     "font": "family=DotGothic16"
+    }
+   ]
+  },
+  {
+   "id": "wa",
+   "name": "和パック",
+   "desc": "墨と和紙・藍染め・金屏風。筆文字と和柄で、とことん和風に",
+   "file": "wa.css",
+   "ver": 1,
+   "themes": [
+    {
+     "id": "sumi",
+     "name": "墨と和紙",
+     "desc": "和紙に墨の筆文字、朱の落款",
+     "c": [
+      "#f6efdf",
+      "#1b1b1b",
+      "#c0392b"
+     ],
+     "font": "family=Yuji+Syuku&family=Shippori+Mincho:wght@500;700"
+    },
+    {
+     "id": "aizome",
+     "name": "藍染め",
+     "desc": "藍色の地に麻の葉文様",
+     "c": [
+      "#1d2c4c",
+      "#f3ecdc",
+      "#d9482b"
+     ],
+     "font": "family=Zen+Old+Mincho:wght@400;700;900",
+     "keepmap": true
+    },
+    {
+     "id": "byobu",
+     "name": "金屏風",
+     "desc": "金箔と漆黒、金雲がたなびく",
+     "c": [
+      "#15110e",
+      "#d8b45c",
+      "#c8321f"
+     ],
+     "font": "family=Shippori+Mincho+B1:wght@600;800",
+     "keepmap": true,
+     "fx": {
+      "k": "kinpun",
+      "n": 22,
+      "size": [
+       6,
+       12
+      ],
+      "dur": [
+       12,
+       22
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "season",
+   "name": "シーズンパック",
+   "desc": "桜・夏祭り・紅葉・クリスマス・お正月。季節の飾りと演出つき",
+   "file": "season.css",
+   "ver": 2,
+   "themes": [
+    {
+     "id": "sakura",
+     "name": "桜",
+     "desc": "桜の枝と、ひらひら舞う花びら",
+     "c": [
+      "#fde4ec",
+      "#e0688e",
+      "#6f9a76"
+     ],
+     "font": "family=Kiwi+Maru:wght@400;500",
+     "fx": {
+      "k": "hana",
+      "n": 34,
+      "size": [
+       9,
+       15
+      ],
+      "dur": [
+       9,
+       17
+      ]
+     },
+     "months": [
+      3,
+      4
+     ]
+    },
+    {
+     "id": "natsu",
+     "name": "夏祭り",
+     "desc": "提灯の明かりと打ち上げ花火",
+     "c": [
+      "#141a36",
+      "#e8442a",
+      "#f2c14e"
+     ],
+     "font": "family=Yusei+Magic",
+     "keepmap": true,
+     "fx": {
+      "k": "hanabi",
+      "n": 7,
+      "size": [
+       12,
+       22
+      ],
+      "dur": [
+       3.5,
+       6.5
+      ]
+     },
+     "months": [
+      7,
+      8
+     ]
+    },
+    {
+     "id": "momiji",
+     "name": "紅葉",
+     "desc": "もみじの枝と、舞い落ちる葉",
+     "c": [
+      "#fbf3e6",
+      "#c8402a",
+      "#f0a12a"
+     ],
+     "font": "family=Zen+Antique",
+     "fx": {
+      "k": "leaf",
+      "n": 22,
+      "size": [
+       12,
+       20
+      ],
+      "dur": [
+       10,
+       18
+      ]
+     },
+     "months": [
+      10,
+      11
+     ]
+    },
+    {
+     "id": "xmas",
+     "name": "クリスマス",
+     "desc": "点滅するイルミネーションと積もる雪",
+     "c": [
+      "#1e3b2f",
+      "#c8102e",
+      "#e9c46a"
+     ],
+     "font": "family=Kaisei+Decol:wght@700&family=M+PLUS+Rounded+1c:wght@400;700",
+     "fx": {
+      "k": "snow",
+      "n": 50
+     },
+     "months": [
+      11,
+      12
+     ]
+    },
+    {
+     "id": "newyear",
+     "name": "お正月",
+     "desc": "初日の出・門松・梅、金粉が舞う",
+     "c": [
+      "#c3272b",
+      "#fffbf2",
+      "#d9b45a"
+     ],
+     "font": "family=Shippori+Mincho+B1:wght@700;800",
+     "fx": {
+      "k": "kinpun",
+      "n": 24,
+      "size": [
+       6,
+       12
+      ],
+      "dur": [
+       12,
+       22
+      ]
+     },
+     "months": [
+      12,
+      1
+     ]
+    }
+   ]
+  }
+ ]
+}
