@@ -668,7 +668,15 @@ function installPacks(){
 function loadCatalog(){
   if(!/^https?:/.test(location.protocol)){packCat="local";return}
   packCat="loading";
-  fetch("packs/catalog.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{packCat=j}).catch(()=>{packCat="err"}).then(()=>{if(document.querySelector(".packs"))drawSet()});
+  fetch("packs/catalog.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{packCat=j;return autoUpdatePacks(j)}).catch(()=>{if(packCat==="loading")packCat="err"}).then(()=>{if(document.querySelector(".packs"))drawSet()});
+}
+// 追加済みのパックに新しい版があれば、自動で入れ替える（「更新」を押さなくてよい）
+async function autoUpdatePacks(cat){
+  const olds=Object.entries(S.packs||{}).map(([id,me])=>[me,(cat.packs||[]).find(x=>x.id===id)]).filter(([me,c])=>c&&c.ver>me.ver);
+  if(!olds.length)return;let n=0;
+  for(const [me,c] of olds){try{const r=await fetch("packs/"+c.file,{cache:"no-cache"});if(!r.ok)continue;const css=await r.text();S.packs[c.id]={name:c.name,desc:c.desc,ver:c.ver,themes:c.themes,css};n++}catch(e){}}
+  if(!n)return;save();installPacks();if(!THEMES.some(t=>t.id===S.ui))S.ui="";applyTheme(S.ui);drawAll();if(selId)openCard(selId);
+  toast("デザインのパックを最新版に更新しました");
 }
 async function addPack(id){
   const pk=(packCat.packs||[]).find(x=>x.id===id);if(!pk)return;
@@ -795,6 +803,7 @@ function locate(){navigator.geolocation.getCurrentPosition(p=>{const ll=[p.coord
 // ---------- 起動 ----------
 function drawAll(){drawList();drawRoute();drawMarkers()}
 installPacks();if(!THEMES.some(t=>t.id===S.ui))S.ui="";applyTheme(S.ui);drawAll();drawSet();
+if(packCat===null)loadCatalog();
 try{map.on("moveend",wxUpdate);map.attributionControl&&map.attributionControl.addAttribution('天気 <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>')}catch(e){}
 $("wxchip").addEventListener("click",()=>{
   if(!S.wx){S.wx=true;S.wxfx=true;toast("天気と演出をONにしました")}
