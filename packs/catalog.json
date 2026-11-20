@@ -49,7 +49,7 @@
    "name": "和パック",
    "desc": "掛軸と絵巻、手帖の栞。縦書きの見出しと短冊のタブで組んだ和のデザイン",
    "file": "wa.css",
-   "ver": 3,
+   "ver": 4,
    "themes": [
     {
      "id": "sumi",
@@ -61,7 +61,8 @@
       "#b4432c"
      ],
      "font": "family=Shippori+Mincho:wght@500;600;700",
-     "kanji": true
+     "kanji": true,
+     "keepmap": true
     },
     {
      "id": "ai",
@@ -73,7 +74,8 @@
       "#b9472f"
      ],
      "font": "family=Shippori+Mincho:wght@500;600;700",
-     "kanji": true
+     "kanji": true,
+     "keepmap": true
     },
     {
      "id": "matcha",
@@ -85,7 +87,8 @@
       "#a8432e"
      ],
      "font": "family=Shippori+Mincho:wght@500;600;700",
-     "kanji": true
+     "kanji": true,
+     "keepmap": true
     }
    ]
   },
@@ -94,7 +97,7 @@
    "name": "シーズンパック",
    "desc": "桜・夏祭り・紅葉・クリスマス・お正月。季節の飾りと演出つき",
    "file": "season.css",
-   "ver": 4,
+   "ver": 5,
    "themes": [
     {
      "id": "sakura",
