@@ -20,7 +20,7 @@
    PICTURE: 画面いっぱいの地図。登録したお店がアイコンで並ぶ
    COLOUR and TYPE: 白×墨色、スポットは深い緑。テーマで切替
    LAYOUT: PCは左にリスト、スマホは地図＋下から引き出すパネル */
-:root{--bg:#fff;--panel:#fff;--ink:#1f2328;--mute:#6b7280;--line:#eceef1;--surf:#f5f6f8;--soft:#eef7f5;--acc:#1f8a7a;--acc-d:#145f54;--want:#1f8a7a;--went:#8a8f94;--route:#1f2328;--peek:64px}
+:root{--bg:#fff;--panel:#fff;--ink:#1f2328;--mute:#6b7280;--line:#eceef1;--surf:#f5f6f8;--soft:#eef7f5;--acc:#1f8a7a;--acc-d:#145f54;--want:#1f8a7a;--went:#8a8f94;--route:#1f2328;--card:#fff;--peek:64px}
 *{box-sizing:border-box;min-width:0}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.55 "Noto Sans JP",system-ui,sans-serif;display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:100%}
@@ -33,7 +33,7 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .total{display:flex;align-items:baseline;gap:4px;flex:none}.total b{font:800 32px/1 Archivo,sans-serif}.total span{font-size:12px;color:var(--mute)}
 .tabs{display:flex;gap:4px;margin:0 16px 4px;padding:4px;background:var(--surf);border-radius:12px}
 .tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:0;background:none;border-radius:9px;min-height:40px;font-weight:500;font-size:14px;color:var(--mute);cursor:pointer;white-space:nowrap}
-.tabs button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs button.on{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .cnt{display:none;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--acc);color:#fff;font:700 11px Archivo,sans-serif;padding:0 6px}.cnt:not(:empty){display:inline-grid}
 .panes{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px 20px 28px}
 .pane{display:none}.pane.on{display:block}
@@ -41,15 +41,15 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .note{font-size:13px;color:var(--mute);margin:6px 0;line-height:1.6}
 .bigbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:48px;border:0;border-radius:12px;background:var(--acc);color:#fff;font-weight:700;font-size:15px;cursor:pointer;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surf);font-size:14px;cursor:pointer;padding:6px 12px;text-decoration:none;color:var(--ink)}
-.btn.line{background:#fff;border-color:#d9dce1}.btn.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.btn.line{background:var(--card);border-color:#d9dce1}.btn.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
 .row2{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.row2>*{flex:1 1 auto}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
-.chips button{display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;cursor:pointer;color:#4b5563;white-space:nowrap}
+.chips button{display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:13px;cursor:pointer;color:var(--chip,#4b5563);white-space:nowrap}
 .chips button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
 .chips button span{font:700 11px Archivo,sans-serif;opacity:.7}
 .seg{display:inline-flex;background:var(--surf);border-radius:10px;padding:3px;margin:4px 0}
 .seg button{border:0;background:none;border-radius:8px;min-height:32px;padding:0 12px;font-size:13px;color:var(--mute);cursor:pointer}
-.seg button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .list{list-style:none;margin:8px 0;padding:0}
 .list li button{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;padding:10px 2px;cursor:pointer;min-height:56px}
 .list li button:hover{background:var(--surf)}
@@ -60,10 +60,10 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .empty b{display:block;font-size:15px;margin-bottom:4px}
 .form label{display:grid;gap:4px;font-size:13px;color:var(--mute);margin-top:12px}
 .form .lbl{font-size:13px;color:var(--mute);margin-top:12px}
-.form input,.form textarea,.form select,select.sel{font:16px "Noto Sans JP",sans-serif;border:1px solid #d9dce1;border-radius:10px;padding:8px 10px;min-height:44px;background:#fff;color:var(--ink);width:100%}
+.form input,.form textarea,.form select,select.sel{font:16px "Noto Sans JP",sans-serif;border:1px solid #d9dce1;border-radius:10px;padding:8px 10px;min-height:44px;background:var(--card);color:var(--ink);width:100%}
 .where{display:flex;align-items:center;gap:8px;background:var(--surf);border-radius:10px;padding:8px 10px;margin-top:6px;font-size:14px}.where b{flex:1;min-width:0}
 .link{border:0;background:none;color:var(--mute);text-decoration:underline;font-size:13px;cursor:pointer;min-height:32px}
-.results{list-style:none;margin:6px 0 0;padding:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.results{list-style:none;margin:6px 0 0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .results button{display:block;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;padding:9px 12px;font-size:14px;cursor:pointer;min-height:44px}.results li:first-child button{border-top:0}
 .results button:hover{background:var(--surf)}
 .rl{list-style:none;margin:8px 0;padding:0}
@@ -71,17 +71,17 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .rn{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font:800 12px Archivo,sans-serif}
 .rt b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rt small{display:block;font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rb{grid-column:2;display:flex;gap:4px}
-.rb button,.rb a{display:grid;place-items:center;min-width:36px;height:32px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;cursor:pointer;text-decoration:none;color:var(--ink);padding:0 8px}
+.rb button,.rb a{display:grid;place-items:center;min-width:36px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:13px;cursor:pointer;text-decoration:none;color:var(--ink);padding:0 8px}
 .rb a{color:var(--acc);font-weight:700;border-color:#cfe6e1}
 .info{font-size:12px;color:var(--mute);background:var(--surf);border-radius:10px;padding:8px 10px;margin:8px 0;line-height:1.6}
 .themes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.themes button{display:grid;gap:5px;text-align:left;border:1.5px solid var(--line);border-radius:10px;background:#fff;padding:10px;cursor:pointer;min-height:44px}
+.themes button{display:grid;gap:5px;text-align:left;border:1.5px solid var(--line);border-radius:10px;background:var(--card);padding:10px;cursor:pointer;min-height:44px}
 .themes button.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 .themes .tn{font-size:13px;font-weight:700}.themes .td{font-size:11px;color:var(--mute);line-height:1.4}
 .themes .sw3{display:flex;gap:4px}.themes .sw3 i{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
 .catedit{list-style:none;margin:6px 0;padding:0}.catedit li{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}.catedit li span{flex:1}
 .catedit button{border:0;background:none;color:var(--mute);text-decoration:underline;cursor:pointer;font-size:13px;min-height:32px}
-.emojis{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.emojis button{width:38px;height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:18px;cursor:pointer}.emojis button.on{border-color:var(--acc);background:var(--soft)}
+.emojis{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.emojis button{width:38px;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-size:18px;cursor:pointer}.emojis button.on{border-color:var(--acc);background:var(--soft)}
 #map{height:100%;background:#e8e6e1}
 /* 検索 */
 .srch{width:380px;max-width:calc(100vw - 80px)}
@@ -123,7 +123,7 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 #card dd a{color:var(--acc)}
 .sec{padding:10px 14px;border-top:1px solid var(--line)}
 .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.acts>*{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #d9dce1;border-radius:10px;background:#fff;font-size:14px;cursor:pointer;text-decoration:none;color:var(--ink);text-align:center;padding:4px 6px}
+.acts>*{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #d9dce1;border-radius:10px;background:var(--card);font-size:14px;cursor:pointer;text-decoration:none;color:var(--ink);text-align:center;padding:4px 6px}
 .acts .pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
 .acts .wide{grid-column:1/-1}
 /* その他 */
@@ -262,6 +262,72 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .results button b{display:block;font-weight:700}.results button small{display:block;color:var(--mute);font-size:12px;margin-top:1px}
 .howto{margin:6px 0 0;font-size:12px;color:var(--mute)}.howto summary{cursor:pointer;color:var(--acc-d);font-weight:700;padding:4px 0}.howto ol{margin:4px 0;padding-left:20px;line-height:1.7}.howto p{margin:2px 0}
 .note.warn{color:#9a3b12;background:#fff3e8;border-radius:8px;padding:8px 10px}
+
+/* ダーク */
+:root[data-ui="dark"]{--bg:#0f1115;--panel:#16191f;--card:#1d2128;--ink:#e8eaed;--mute:#9aa0a6;--line:#2a2f37;--surf:#1d2128;--soft:#1c2b28;--acc:#3cc4ad;--acc-d:#7fe0cf;--want:#3cc4ad;--went:#8a8f94;--route:#e8eaed;--chip:#d5d8dc;color-scheme:dark}
+:root[data-ui="dark"] body{background:var(--bg);color:var(--ink)}
+:root[data-ui="dark"] #map{background:#0f1115}
+:root[data-ui="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.9) contrast(.9) saturate(.5)}
+:root[data-ui="dark"] .bigbtn,:root[data-ui="dark"] .chips button.on,:root[data-ui="dark"] .acts .pri,:root[data-ui="dark"] .btn.on,:root[data-ui="dark"] .cnt,:root[data-ui="dark"] .rn,:root[data-ui="dark"] #pickbar{color:#0f1115}
+:root[data-ui="dark"] .seg button.on[data-c="want"],:root[data-ui="dark"] .seg button.on[data-fs="want"],:root[data-ui="dark"] .seg button.on[data-st="want"]{background:var(--want);color:#0f1115}
+:root[data-ui="dark"] .seg button.on[data-c="went"],:root[data-ui="dark"] .seg button.on[data-fs="went"],:root[data-ui="dark"] .seg button.on[data-st="went"]{background:var(--went);color:#0f1115}
+:root[data-ui="dark"] .spin span .ci{stroke:#16191f}:root[data-ui="dark"] .spin span .ci .w{fill:#e8eaed}
+:root[data-ui="dark"] .tabs button.on,:root[data-ui="dark"] .seg button.on{background:#2a2f37}
+:root[data-ui="dark"] .btn.line,:root[data-ui="dark"] .acts>*,:root[data-ui="dark"] .form input,:root[data-ui="dark"] .form textarea,:root[data-ui="dark"] select.sel{border-color:#363c46}
+:root[data-ui="dark"] .acts .pri{border-color:var(--acc)}
+:root[data-ui="dark"] .rb a{border-color:#2f4f49}
+:root[data-ui="dark"] #card,:root[data-ui="dark"] .sbox,:root[data-ui="dark"] .sres,:root[data-ui="dark"] .legend{box-shadow:0 0 0 1px #2a2f37,0 10px 30px rgba(0,0,0,.5)}
+:root[data-ui="dark"] .spin>svg path{stroke:#16191f}
+:root[data-ui="dark"] .spin span{background:#e8eaed}
+:root[data-ui="dark"] .spin b{color:#0f1115;border-color:#16191f}
+:root[data-ui="dark"] .tag.went{color:#0f1115}
+:root[data-ui="dark"] .leaflet-bar a,:root[data-ui="dark"] .leaflet-control-layers{background:#1d2128!important;color:#e8eaed!important;border-color:#2a2f37!important}
+:root[data-ui="dark"] .leaflet-control-attribution{background:rgba(22,25,31,.85)!important;color:#9aa0a6}:root[data-ui="dark"] .leaflet-control-attribution a{color:#7fe0cf}
+:root[data-ui="dark"] .pinlbl{background:#1d2128;color:#e8eaed}
+:root[data-ui="dark"] .grab:before{background:#3a404a}
+:root[data-ui="dark"] #toast{background:#e8eaed;color:#0f1115}
+:root[data-ui="dark"] .note.warn{background:#3a2a1f;color:#ffc9a3}
+:root[data-ui="dark"] .ci{stroke:#e8eaed;stroke-width:1.5}:root[data-ui="dark"] .ci .f{fill:rgba(60,196,173,.45)}:root[data-ui="dark"] .ci .f2{fill:rgba(232,234,237,.3)}:root[data-ui="dark"] .ci .w{fill:#16191f}
+/* 拡張パックの一覧 */
+.packs{display:grid;gap:8px}
+.pack{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--card)}
+.pack.got{border-color:var(--acc)}
+.pack b{font-size:14px}.pack b small{font-size:11px;color:var(--acc-d);margin-left:4px}
+.pack p{margin:4px 0 0;font-size:12px;color:var(--mute);line-height:1.5}.pack .pk-t{color:var(--ink)}
+.pack .row2{margin-top:8px}.pack .row2 .btn{flex:1}
+.pk-sw{display:flex;gap:8px;margin-bottom:6px}.pk-sw span{display:flex}.pk-sw i{width:14px;height:14px;border-radius:50%;margin-right:-4px;border:1.5px solid var(--card)}
+:where(:root[data-ui]) button,:where(:root[data-ui]) a{color:inherit}
+/* 季節の演出（雪・花びら） */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:900;overflow:hidden}
+#fx i{position:absolute;top:-24px;animation:fxfall linear infinite;will-change:transform}
+#fx.snow i{width:var(--s);height:var(--s);border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(30,59,47,.35);opacity:.9}
+#fx.petal i{width:calc(var(--s) * 1.3);height:var(--s);background:#f7b3c7;border-radius:100% 0 100% 0;opacity:.85}
+@keyframes fxfall{to{transform:translate(var(--dx),calc(100vh + 40px)) rotate(var(--r))}}
+@media (prefers-reduced-motion:reduce){#fx{display:none}:root[data-ui="pixel"] .head h1:before{animation:none}}
+.tgrp{font-size:12px;font-weight:700;color:var(--mute);margin:12px 0 6px;letter-spacing:.06em}.tgrp:first-of-type{margin-top:0}
+.themes .sw3 .now{font-style:normal;font-size:10px;font-weight:700;background:var(--acc);color:#fff;border-radius:4px;padding:1px 5px;margin-left:auto;line-height:14px}
+/* 天気 */
+.wxchip{display:flex;align-items:center;gap:6px;margin-top:6px;background:var(--panel);color:var(--ink);border:0;border-radius:999px;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.14);font-size:13px;width:max-content;max-width:100%;cursor:default}
+.wxchip[hidden]{display:none}.wxchip b{font-weight:800}.wxchip small{color:var(--mute);font-size:11px}
+#wx{position:absolute;inset:0;z-index:450;pointer-events:none;overflow:hidden}
+#wx:before,#wx:after{content:"";position:absolute;inset:0;pointer-events:none}
+#wx.sun:after{background:radial-gradient(circle at 88% -6%,rgba(255,206,110,.42),rgba(255,206,110,.12) 28%,transparent 55%)}
+#wx.cloud:after{background:linear-gradient(180deg,rgba(110,122,140,.22),rgba(110,122,140,.06))}
+#wx.rain:after,#wx.heavy:after,#wx.storm:after{background:linear-gradient(180deg,rgba(70,90,120,.25),rgba(70,90,120,.1))}
+#wx.fog:after{background:linear-gradient(90deg,rgba(238,240,244,.15),rgba(238,240,244,.6),rgba(238,240,244,.2));background-size:200% 100%;animation:fog 18s ease-in-out infinite alternate}
+@keyframes fog{to{background-position:100% 0}}
+#wx.night:before{background:rgba(12,22,64,.32);mix-blend-mode:multiply}
+#wx.storm:before{background:#fff;opacity:0;animation:flash 7s infinite}
+#wx.storm.night:before{background:#fff}
+@keyframes flash{0%,91%,95%,100%{opacity:0}92%{opacity:.55}93%{opacity:.08}94%{opacity:.4}}
+#wx i{position:absolute;top:-30px;animation:drop linear infinite}
+#wx.rain i,#wx.heavy i,#wx.storm i{width:1.5px;height:18px;background:linear-gradient(transparent,rgba(70,110,170,.85));transform:rotate(12deg)}
+#wx.heavy i,#wx.storm i{height:26px}
+@keyframes drop{to{transform:translate(-22vh,calc(100vh + 60px)) rotate(12deg)}}
+#wx.snow i{width:var(--s);height:var(--s);border-radius:50%;background:#fff;box-shadow:0 0 2px rgba(0,0,0,.3);animation-name:wsnow}
+@keyframes wsnow{to{transform:translate(var(--dx),calc(100vh + 40px))}}
+.tog{display:flex;align-items:flex-start;gap:8px;font-size:14px;margin:6px 0;cursor:pointer}.tog input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--acc);flex:none}
+@media (prefers-reduced-motion:reduce){#wx i{display:none}#wx:before,#wx:after{animation:none!important}}
 </style>
 </head>
 <body>
@@ -301,7 +367,7 @@ const isMobile=()=>window.matchMedia("(max-width:760px)").matches;
 const KEY="mySpotMap.v1";
 const DEFAULT_CATS=[["古着屋","👕"],["カフェ","☕"],["雑貨・インテリア","🪴"],["本屋","📚"],["レコード・音楽","💿"],["飲食","🍴"],["美容","✂"],["その他","★"]];
 const EMOJIS=["👕","👟","👜","🧢","💍","☕","🍰","🍴","🍺","📚","💿","🎸","🪴","🕯","🖼","✂","💈","🧴","🎨","📷","🛹","🏷","★","❤"];
-function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");return {spots:d.spots||[],cats:d.cats||DEFAULT_CATS,route:d.route||[],ui:d.ui||"",mode:d.mode||"driving"}}catch(e){return {spots:[],cats:DEFAULT_CATS,route:[],ui:"",mode:"driving"}}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");return {spots:d.spots||[],cats:d.cats||DEFAULT_CATS,route:d.route||[],ui:d.ui||"",mode:d.mode||"driving",packs:d.packs||{},wx:d.wx!==false,wxfx:d.wxfx!==false}}catch(e){return {spots:[],cats:DEFAULT_CATS,route:[],ui:"",mode:"driving",packs:{},wx:true,wxfx:true}}}
 let S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("この端末に保存できませんでした（ブラウザの設定を確認してください）")}}
 const WM=()=>S.ui==="vintage"?"⚑":"♡";
@@ -466,13 +532,13 @@ $("fabAdd").addEventListener("click",()=>openForm(null));
 // ---------- 詳細カード ----------
 let delArm=null;
 function openCard(id){
-  const s=byId(id);if(!s)return;selId=id;delArm=null;drawMarkers();
+  const s=byId(id);if(!s)return;if(S.wx)setTimeout(()=>getWx(s.lat,s.lng).then(w=>{const el=$("cardWx");if(el&&selId===id)el.textContent=w?w.icon+" "+w.label+"　"+w.temp+"℃"+(w.precip>0?"・降水 "+w.precip+"mm":"")+"　風 "+w.wind+"m/s":"取得できませんでした"}),0);selId=id;delArm=null;drawMarkers();
   const inR=S.route.includes(id);
   const gm="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.name+" "+(s.addr&&s.addr!=="地図で指定した場所"?s.addr:s.lat.toFixed(6)+","+s.lng.toFixed(6)));
   const url=/^https?:\/\//.test(s.url||"")?s.url:"";
   $("card").innerHTML='<div class="ch"><span class="cic">'+catIcon(s.cat)+'</span><h3>'+esc(s.name)+'<small>'+catIcon(s.cat)+' '+esc(s.cat)+'</small></h3><button class="x" data-c="close" aria-label="閉じる">×</button></div>'
    +'<div class="sec" style="border:0;padding-top:0"><div class="seg"><button data-c="want" class="'+(s.went?'':'on')+'">'+WM()+' 行きたい</button><button data-c="went" class="'+(s.went?'on':'')+'">✓ 行った</button></div></div>'
-   +'<dl>'+(s.addr?'<dt>場所</dt><dd>'+esc(s.addr)+'</dd>':'')+(s.memo?'<dt>メモ</dt><dd>'+esc(s.memo)+'</dd>':'')+(url?'<dt>リンク</dt><dd><a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(url.replace(/^https?:\/\//,"").slice(0,42))+'</a></dd>':'')+'</dl>'
+   +'<dl>'+(s.addr?'<dt>場所</dt><dd>'+esc(s.addr)+'</dd>':'')+(S.wx?'<dt>天気</dt><dd id="cardWx" class="note" style="margin:0">取得中…</dd>':'')+(s.memo?'<dt>メモ</dt><dd>'+esc(s.memo)+'</dd>':'')+(url?'<dt>リンク</dt><dd><a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(url.replace(/^https?:\/\//,"").slice(0,42))+'</a></dd>':'')+'</dl>'
    +'<div class="sec acts"><a class="pri" href="'+gm+'" target="_blank" rel="noopener">Googleマップで開く</a><button data-c="route">'+(inR?'✓ 巡るリスト'+(S.route.indexOf(id)+1)+'番目':'＋ 巡るリストへ')+'</button>'
    +'<button data-c="share">友だちに送る</button><button data-c="edit">編集</button><button data-c="del" class="wide">'+(delArm===id?'もう一度押すと削除':'削除')+'</button></div>';
   $("card").classList.add("show");if(isMobile()&&sheetOpen)setSheet(false);
@@ -531,21 +597,101 @@ $("pRoute").addEventListener("click",e=>{
 $("pRoute").addEventListener("change",e=>{if(e.target.dataset.r==="mode"){S.mode=e.target.value;save();drawRoute()}});
 
 // ---------- 設定 ----------
-const THEMES=[
-  {id:"",name:"標準",desc:"すっきり見やすい",c:["#ffffff","#1f2328","#1f8a7a"]},
-  {id:"vintage",name:"A ヴィンテージ古着",desc:"赤×デニムのアメリカン・ヴィンテージ",c:["#f2e8d8","#c94b43","#355c7d"],font:"family=M+PLUS+1p:wght@500;700;800"},
-  {id:"retro",name:"B レトロ喫茶",desc:"70年代のオレンジ×こげ茶、丸い文字",c:["#f4e1b9","#e8843a","#7a4a28"],font:"family=Zen+Maru+Gothic:wght@500;700;900&family=M+PLUS+Rounded+1c:wght@400;500;700"},
-  {id:"mono",name:"C モノトーン",desc:"白黒と真鍮のセレクトショップ風",c:["#ffffff","#1a1a1a","#b08d57"]}];
+const BASE_THEMES=[
+  {id:"",grp:"ベーシック",name:"標準",desc:"すっきり見やすい",c:["#ffffff","#1f2328","#1f8a7a"]},
+  {id:"vintage",grp:"ベーシック",name:"A ヴィンテージ古着",desc:"赤×デニムのアメリカン・ヴィンテージ",c:["#f2e8d8","#c94b43","#355c7d"],font:"family=M+PLUS+1p:wght@500;700;800"},
+  {id:"retro",grp:"ベーシック",name:"B レトロ喫茶",desc:"70年代のオレンジ×こげ茶、丸い文字",c:["#f4e1b9","#e8843a","#7a4a28"],font:"family=Zen+Maru+Gothic:wght@500;700;900&family=M+PLUS+Rounded+1c:wght@400;500;700"},
+  {id:"mono",grp:"ベーシック",name:"C モノトーン",desc:"白黒と真鍮のセレクトショップ風",c:["#ffffff","#1a1a1a","#b08d57"]},
+  {id:"dark",grp:"ベーシック",name:"ダーク",desc:"夜や暗い場所で見やすい黒基調",c:["#16191f","#e8eaed","#3cc4ad"]}];
+let THEMES=BASE_THEMES.slice();
+const THEME_TC={vintage:"#2b4767",retro:"#e8843a",mono:"#1a1a1a",dark:"#16191f"};
+
+// ---------- 天気（Open-Meteo・無料・キー不要） ----------
+const WX_CODE={0:["☀","快晴","sun"],1:["🌤","晴れ","sun"],2:["⛅","晴れ時々くもり","cloud"],3:["☁","くもり","cloud"],45:["🌫","霧","fog"],48:["🌫","霧（着氷）","fog"],51:["🌦","弱い霧雨","rain"],53:["🌦","霧雨","rain"],55:["🌧","強い霧雨","rain"],56:["🌧","着氷性の霧雨","rain"],57:["🌧","着氷性の霧雨","rain"],61:["🌧","小雨","rain"],63:["🌧","雨","rain"],65:["🌧","強い雨","heavy"],66:["🌧","着氷性の雨","rain"],67:["🌧","強い着氷性の雨","heavy"],71:["🌨","小雪","snow"],73:["🌨","雪","snow"],75:["❄","大雪","snow"],77:["🌨","霧雪","snow"],80:["🌦","にわか雨","rain"],81:["🌧","にわか雨","rain"],82:["⛈","激しいにわか雨","heavy"],85:["🌨","にわか雪","snow"],86:["❄","強いにわか雪","snow"],95:["⛈","雷雨","storm"],96:["⛈","雷雨（ひょう）","storm"],99:["⛈","激しい雷雨（ひょう）","storm"]};
+const wxCache={};
+function getWx(lat,lng){
+  const k=lat.toFixed(1)+","+lng.toFixed(1),c=wxCache[k];
+  if(c&&Date.now()-c.t<10*60*1000)return c.p;
+  const p=fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat.toFixed(3)+"&longitude="+lng.toFixed(3)+"&current=temperature_2m,weather_code,is_day,precipitation,wind_speed_10m&wind_speed_unit=ms&timezone=Asia%2FTokyo")
+    .then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{const u=j.current||{},d=WX_CODE[u.weather_code]||["🌡","—","cloud"];
+      return {icon:(!u.is_day&&d[2]==="sun")?"🌙":d[0],label:d[1],kind:d[2],day:!!u.is_day,temp:Math.round(u.temperature_2m),precip:u.precipitation||0,wind:Math.round(u.wind_speed_10m)}})
+    .catch(()=>{delete wxCache[k];return null});
+  wxCache[k]={t:Date.now(),p};return p;
+}
+let wxT=null,wxSeq=0;
+function wxUpdate(){
+  clearTimeout(wxT);
+  wxT=setTimeout(async()=>{
+    const chip=$("wxchip");if(!chip)return;
+    let z=12,c={lat:34.69,lng:135.5};try{z=map.getZoom();c=map.getCenter()}catch(e){}
+    if(!S.wx||z<8){chip.hidden=true;setWxFx(null);return}
+    const my=++wxSeq;const w=await getWx(c.lat,c.lng);if(my!==wxSeq)return;
+    if(!w){chip.hidden=true;setWxFx(null);return}
+    chip.hidden=false;chip.innerHTML='<b>'+w.icon+'</b><span>'+esc(w.label)+'</span><b>'+w.temp+'℃</b><small>地図の中心付近・いま</small>';
+    chip.title="風 "+w.wind+"m/s"+(w.precip>0?"／降水 "+w.precip+"mm":"")+"（Open-Meteo）";
+    setWxFx(S.wxfx?w:null);
+  },700);
+}
+function setWxFx(w){
+  let el=$("wx");
+  if(!w){if(el)el.remove();return}
+  if(!el){el=document.createElement("div");el.id="wx";el.setAttribute("aria-hidden","true");$("map").appendChild(el)}
+  const cls=w.kind+(w.day?"":" night");if(el.className===cls)return;el.className=cls;
+  let h="";const n={rain:60,heavy:110,storm:110,snow:50}[w.kind]||0;
+  for(let i=0;i<n;i++){const snow=w.kind==="snow",d=snow?6+Math.random()*7:.45+Math.random()*.4;
+    h+='<i style="left:'+(Math.random()*110-5).toFixed(1)+'%;animation-duration:'+d.toFixed(2)+'s;animation-delay:-'+(Math.random()*d).toFixed(2)+'s;'+(snow?'--s:'+(2+Math.random()*4).toFixed(1)+'px;--dx:'+((Math.random()-.5)*80).toFixed(0)+'px':'opacity:'+(.35+Math.random()*.45).toFixed(2))+'"></i>'}
+  el.innerHTML=h;
+}
+// ---------- 拡張パック（packs/ フォルダのデザインを追加・削除） ----------
+let packCat=null;
+function installPacks(){
+  document.querySelectorAll("style.pack").forEach(x=>x.remove());
+  THEMES=BASE_THEMES.slice();
+  for(const [id,pk] of Object.entries(S.packs||{})){
+    const st=document.createElement("style");st.className="pack";st.dataset.pack=id;st.textContent=pk.css||"";document.head.appendChild(st);
+    for(const t of pk.themes||[])THEMES.push({...t,grp:pk.name,pack:id});
+  }
+}
+function loadCatalog(){
+  if(!/^https?:/.test(location.protocol)){packCat="local";return}
+  packCat="loading";
+  fetch("packs/catalog.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{packCat=j}).catch(()=>{packCat="err"}).then(()=>{if(document.querySelector(".packs"))drawSet()});
+}
+async function addPack(id){
+  const pk=(packCat.packs||[]).find(x=>x.id===id);if(!pk)return;
+  try{const r=await fetch("packs/"+pk.file,{cache:"no-cache"});if(!r.ok)throw 0;const css=await r.text();
+    S.packs[id]={name:pk.name,desc:pk.desc,ver:pk.ver,themes:pk.themes,css};save();installPacks();drawSet();toast("「"+pk.name+"」を追加しました。上のデザインから選べます")}
+  catch(e){toast("追加できませんでした（インターネット接続を確認してください）")}
+}
+function delPack(id){
+  const pk=S.packs[id];if(!pk)return;
+  if((pk.themes||[]).some(t=>t.id===S.ui))applyTheme("");
+  delete S.packs[id];save();installPacks();drawSet();drawAll();toast("「"+pk.name+"」を外しました")
+}
+function setFx(kind){let el=$("fx");if(!kind){if(el)el.remove();return}
+  if(!el){el=document.createElement("div");el.id="fx";el.setAttribute("aria-hidden","true");document.body.appendChild(el)}
+  if(el.className===kind)return;el.className=kind;let h="";
+  for(let i=0;i<(kind==="snow"?36:22);i++){const d=8+Math.random()*10;h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;--s:'+(kind==="snow"?3+Math.random()*5:7+Math.random()*6).toFixed(1)+'px;--dx:'+((Math.random()-.5)*160).toFixed(0)+'px;--r:'+(kind==="snow"?0:(Math.random()>.5?1:-1)*(360+Math.random()*360)).toFixed(0)+'deg;animation-duration:'+d.toFixed(1)+'s;animation-delay:-'+(Math.random()*d).toFixed(1)+'s"></i>'}
+  el.innerHTML=h}
 function applyTheme(id){
   if(id==="paper")id="vintage";
   S.ui=id;if(id)document.documentElement.dataset.ui=id;else delete document.documentElement.dataset.ui;
-  const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.content={vintage:"#2b4767",retro:"#e8843a",mono:"#1a1a1a"}[id]||"#1f8a7a";
+  const th=THEMES.find(x=>x.id===id);setFx(th&&th.fx);
+  const tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.content=THEME_TC[id]||(th&&id?th.c[0]:"#1f8a7a");
   const t=THEMES.find(x=>x.id===id);
   if(t&&t.font&&!document.getElementById("font-"+id)){const l=document.createElement("link");l.id="font-"+id;l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?"+t.font+"&display=swap";document.head.appendChild(l)}
 }
 let newCat={name:"",icon:"🏷"},catDel=null;
 function drawSet(){
-  let h='<h3 class="ph" style="margin-top:4px">デザイン</h3><div class="themes">'+THEMES.map(t=>'<button data-ui-set="'+t.id+'" class="'+(t.id===S.ui?'on':'')+'"><span class="sw3">'+t.c.map(c=>'<i style="background:'+c+'"></i>').join("")+'</span><span class="tn">'+t.name+'</span><span class="td">'+t.desc+'</span></button>').join("")+'</div>';
+  const mo=new Date().getMonth()+1;
+  let h='<h3 class="ph" style="margin-top:4px">デザイン</h3>'+[...new Set(THEMES.map(t=>t.grp))].map(g=>'<div class="tgrp">'+g+'</div><div class="themes">'+THEMES.filter(t=>t.grp===g).map(t=>'<button data-ui-set="'+t.id+'" class="'+(t.id===S.ui?'on':'')+'"><span class="sw3">'+t.c.map(c=>'<i style="background:'+c+'"></i>').join("")+(t.months&&t.months.includes(mo)?'<em class="now">今の季節</em>':'')+'</span><span class="tn">'+t.name+'</span><span class="td">'+t.desc+'</span></button>').join("")+'</div>').join("");
+  if(packCat===null)loadCatalog();
+  {const inst=S.packs||{};const cat=packCat&&packCat.packs?packCat.packs:[];const ids=[...new Set([...cat.map(x=>x.id),...Object.keys(inst)])];
+   h+='<h3 class="ph">天気</h3><label class="tog"><input type="checkbox" data-wx="wx"'+(S.wx?' checked':'')+'><span>地図に今の天気を表示（地図の中心付近）</span></label><label class="tog"><input type="checkbox" data-wx="wxfx"'+(S.wxfx?' checked':'')+(S.wx?'':' disabled')+'><span>雨・雪・霧・夜などを地図に演出する</span></label><p class="note" style="margin:2px 0 0">天気データ：Open-Meteo（無料）。10分ごとに更新します。</p>';
+   h+='<h3 class="ph">拡張パック</h3><div class="packs">'+(ids.length?ids.map(id=>{const c=cat.find(x=>x.id===id),me=inst[id],pk=c||me;
+     const btn=me?(c&&c.ver>me.ver?'<button class="btn on" data-pack-add="'+id+'">更新</button>':'')+'<button class="btn line" data-pack-del="'+id+'">外す</button>':'<button class="btn on" data-pack-add="'+id+'">＋ 追加</button>';
+     return '<div class="pack'+(me?' got':'')+'"><div class="pk-sw">'+(pk.themes||[]).map(t=>'<span title="'+esc(t.name)+'">'+t.c.map(x=>'<i style="background:'+x+'"></i>').join("")+'</span>').join("")+'</div><b>'+esc(pk.name)+(me?' <small>追加済み</small>':'')+'</b><p>'+esc(pk.desc||"")+'</p><p class="pk-t">'+(pk.themes||[]).map(t=>esc(t.name)).join("・")+'</p><div class="row2">'+btn+'</div></div>'}).join(""):'')
+     +(packCat==="loading"?'<p class="note">拡張パックを確認しています…</p>':packCat==="err"?'<p class="note">拡張パックの一覧を読み込めませんでした（インターネット接続を確認してください）。</p>':packCat==="local"?'<p class="note">拡張パックは、Webで公開したマイスポット（https://～）から追加できます。</p>':'')+'</div>'}
   h+='<h3 class="ph">カテゴリ</h3><ul class="catedit">'+S.cats.map(c=>{const n=S.spots.filter(s=>s.cat===c[0]).length;return '<li><span class="cei">'+ico(c[1])+'</span><span>'+esc(c[0])+' <small class="note">'+n+'件</small></span>'+(S.cats.length>1?'<button data-catdel="'+esc(c[0])+'">'+(catDel===c[0]?(n?'このカテゴリの'+n+'件は「その他」へ — 削除':'もう一度押すと削除'):'削除')+'</button>':'')+'</li>'}).join("")+'</ul>'
    +'<div class="row2"><input class="sel" data-newcat placeholder="新しいカテゴリ名（例：スニーカー）" value="'+esc(newCat.name)+'" style="flex:3"><button class="btn line" data-a="addcat">追加</button></div>'
    +'<div class="emojis">'+EMOJIS.map(e=>'<button data-emoji="'+e+'" class="'+(newCat.icon===e?'on':'')+'" title="'+e+'">'+ico(e)+'</button>').join("")+'</div>';
@@ -558,6 +704,9 @@ function drawSet(){
   $("pSet").innerHTML=h;
 }
 $("pSet").addEventListener("click",e=>{
+  const wxt=e.target.closest("[data-wx]");if(wxt){S[wxt.dataset.wx]=wxt.checked;save();drawSet();wxUpdate();if(selId)openCard(selId);return}
+  const pa=e.target.closest("[data-pack-add]");if(pa){addPack(pa.dataset.packAdd);return}
+  const pd=e.target.closest("[data-pack-del]");if(pd){delPack(pd.dataset.packDel);return}
   const t=e.target.closest("[data-ui-set]");if(t){applyTheme(t.dataset.uiSet);save();drawSet();drawAll();if(selId)openCard(selId);toast("デザインを「"+THEMES.find(x=>x.id===S.ui).name+"」にしました");return}
   const em=e.target.closest("[data-emoji]");if(em){newCat.name=document.querySelector("[data-newcat]").value;newCat.icon=em.dataset.emoji;drawSet();return}
   const cd=e.target.closest("[data-catdel]");if(cd){const c=cd.dataset.catdel;if(catDel!==c){catDel=c;drawSet();setTimeout(()=>{if(catDel===c){catDel=null;drawSet()}},4000);return}
@@ -581,7 +730,7 @@ $("file").addEventListener("change",async e=>{const f=e.target.files[0];e.target
 
 // ---------- 検索（自分のスポット＋地名） ----------
 const ctl=L.control({position:"topleft"});
-ctl.onAdd=()=>{const d=L.DomUtil.create("div","srch");d.innerHTML='<div class="sbox"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" placeholder="スポット名・地名・住所で検索" autocomplete="off" enterkeyhint="search" aria-label="検索"><button id="qx" aria-label="検索をクリア">×</button></div><div class="sres" id="sres" role="listbox"></div>';L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);return d};
+ctl.onAdd=()=>{const d=L.DomUtil.create("div","srch");d.innerHTML='<div class="sbox"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" placeholder="スポット名・地名・住所で検索" autocomplete="off" enterkeyhint="search" aria-label="検索"><button id="qx" aria-label="検索をクリア">×</button></div><div class="sres" id="sres" role="listbox"></div><button class="wxchip" id="wxchip" hidden aria-live="polite"></button>';L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);return d};
 ctl.addTo(map);L.control.zoom({position:"topleft"}).addTo(map);
 let hits=[],hitSel=0,places=null,placeBusy=false,placeT=null,lastQ="";
 function doSearch(){
@@ -625,7 +774,10 @@ function locate(){navigator.geolocation.getCurrentPosition(p=>{const ll=[p.coord
 
 // ---------- 起動 ----------
 function drawAll(){drawList();drawRoute();drawMarkers()}
-applyTheme(S.ui);drawAll();drawSet();
+installPacks();if(!THEMES.some(t=>t.id===S.ui))S.ui="";applyTheme(S.ui);drawAll();drawSet();
+try{map.on("moveend",wxUpdate);map.attributionControl&&map.attributionControl.addAttribution('天気 <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>')}catch(e){}
+wxUpdate();setInterval(()=>{if(!document.hidden)wxUpdate()},10*60*1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)wxUpdate()});
 // 別の端末から送られたリンク（#sp=...）
 (()=>{const m=location.hash.match(/sp=([A-Za-z0-9_-]+)/);if(!m)return;try{const n=merge(decodeSpots(m[1]));toast("スポットを "+n+"件 取り込みました");fitAll()}catch(e){toast("リンクを読み込めませんでした")}try{history.replaceState(null,"",location.pathname)}catch(e){}})();
 if(S.spots.length)fitAll();
