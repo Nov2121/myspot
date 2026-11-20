@@ -258,6 +258,8 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 :root[data-ui="mono"] .ci{stroke:#1a1a1a;stroke-width:1.3}
 :root[data-ui="mono"] .ci .f2{fill:#1a1a1a}
 .chips button.on .ci{stroke:#fff!important}.chips button.on .ci .f,.chips button.on .ci .f2,.chips button.on .ci .w{fill:none!important}
+.btn.here{width:100%;margin-top:6px;justify-content:center;font-weight:700;background:var(--soft);border:1.5px solid var(--acc);color:var(--acc-d)}
+.results button b{display:block;font-weight:700}.results button small{display:block;color:var(--mute);font-size:12px;margin-top:1px}
 </style>
 </head>
 <body>
@@ -354,7 +356,25 @@ $("grab").addEventListener("click",()=>setSheet(!sheetOpen));
 function openPanel(tab){setTab(tab);if(isMobile())setSheet(true)}
 
 // ---------- 一覧 ----------
-let form=null,formPlace=null,formBusy=false,picking=false;
+let form=null,formPlace=null,formBusy=false,formQ="",picking=false;
+const GEO_OK=!!(window.isSecureContext&&navigator.geolocation);
+const NOMI="https://nominatim.openstreetmap.org/";
+// OpenStreetMap（Nominatim）の住所を日本式の並びにする
+function jpAddr(a){if(!a)return "";const k=["province","state","city","town","village","county","city_district","suburb","quarter","neighbourhood","hamlet","block_number","house_number"];const out=[];for(const x of k){const v=a[x];if(v&&!out.includes(v)&&!out.some(o=>o.includes(v)))out.push(v)}let t=out.join("");if(a.house_number&&/^\d/.test(a.house_number))t=t.replace(new RegExp(a.house_number+"$"),"-"+a.house_number).replace(/(丁目)-/,"$1");return t}
+async function revGeo(lat,lng){try{const r=await fetch(NOMI+"reverse?format=jsonv2&addressdetails=1&zoom=18&accept-language=ja&lat="+lat+"&lon="+lng);const j=await r.json();return jpAddr(j.address)}catch(e){return ""}}
+// 場所を決めたら住所を自動で入れる（分からなければ「地図で指定した場所」）
+function setLoc(p,addr){const f=form;if(!f)return;f.lat=p.lat;f.lng=p.lng;f.addr=addr||"住所を調べています…";showTmp(p);if(!addr){revGeo(p.lat,p.lng).then(t=>{if(form===f&&f.lat===p.lat&&f.addr==="住所を調べています…"){f.addr=t||"地図で指定した場所";if(document.querySelector("#pList .where")){readForm();drawForm()}}})}}
+// 貼り付けた文章から座標・店名・住所を読み取る
+function parsePaste(t){t=String(t||"").trim();const out={q:t};
+  const m=t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||t.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)||t.match(/[?&](?:q|query|ll|center|destination)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i)||t.match(/^\s*(-?\d{1,2}\.\d{3,})\s*[, ]\s*(-?\d{2,3}\.\d{3,})\s*$/);
+  if(m){const la=+m[1],ln=+m[2];if(Math.abs(la)<=90&&Math.abs(ln)<=180)out.ll={lat:la,lng:ln}}
+  const pl=t.match(/\/maps\/place\/([^\/@?]+)/);if(pl){try{out.name=decodeURIComponent(pl[1].replace(/\+/g," "))}catch(e){}}
+  const lines=t.split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!/^https?:\/\//.test(x));
+  const ad=lines.find(x=>/〒|\d{3}-\d{4}|(都|道|府|県).+(市|区|町|村|郡)|(市|区).+(町|丁目|\d)/.test(x));
+  if(ad){out.addr=ad.replace(/^〒?\s*\d{3}-?\d{4}\s*/,"").replace(/^日本、?\s*/,"").trim();const nm=lines.find(x=>x!==ad);if(nm&&!out.name)out.name=nm}
+  else if(lines.length>=1&&lines.length<=3&&/https?:\/\//.test(t)&&!out.name)out.name=lines[0];
+  out.short=/https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps)/.test(t)&&!out.ll&&!out.addr&&lines.length===0;
+  out.q=out.addr||lines.join(" ")||out.name||"";return out}
 function drawList(){
   $("tot").textContent=S.spots.length;drawGrab();
   if(form)return drawForm();
@@ -379,8 +399,10 @@ function drawForm(){
    +'<div class="lbl">状態</div><div class="seg"><button data-fs="want" class="'+(f.went?'':'on')+'">'+WM()+' 行きたい</button><button data-fs="went" class="'+(f.went?'on':'')+'">✓ 行った</button></div>'
    +'<div class="lbl">場所</div>';
   if(f.lat!=null)h+='<div class="where"><b>'+esc(f.addr||"地図で指定した場所")+'</b><button class="link" data-a="replace">変更</button></div>';
-  else h+='<div class="row2" style="margin-top:6px"><input data-f="q" placeholder="住所・地名で探す（例：南船場）" enterkeyhint="search" style="flex:3"><button class="btn line" data-a="search">探す</button></div>'
-   +(formBusy?'<p class="note">検索中…</p>':formPlace==="err"?'<p class="note">検索できませんでした（インターネット接続を確認してください）。</p>':Array.isArray(formPlace)?(formPlace.length?'<ul class="results">'+formPlace.map((p,i)=>'<li><button data-pick="'+i+'">'+esc(p.label)+'</button></li>').join("")+'</ul>':'<p class="note">見つかりませんでした。地図で指定もできます。</p>'):'')
+  else h+=(GEO_OK?'<button class="btn here" data-a="here">📍 今いる場所で登録</button>':'')
+   +'<div class="row2" style="margin-top:6px"><textarea data-f="q" rows="2" placeholder="店名・住所・Googleマップのリンクなどを貼り付け" enterkeyhint="search" style="flex:3;resize:vertical">'+esc(formQ)+'</textarea><button class="btn line" data-a="search">探す</button></div>'
+   +'<p class="note" style="margin:4px 0 0">例）「ポプラ 堀江」「南船場4丁目」／Googleマップの「共有」でコピーした内容をそのまま</p>'
+   +(formBusy?'<p class="note">'+esc(formBusy===true?'検索中…':formBusy)+'</p>':formPlace==="err"?'<p class="note">検索できませんでした（インターネット接続を確認してください）。</p>':formPlace==="short"?'<p class="note">短縮リンク（maps.app.goo.gl）だけでは場所が分かりません。Googleマップでお店を開き「共有」→「コピー」した文章ごと貼るか、店名で探してください。</p>':Array.isArray(formPlace)?(formPlace.length?'<ul class="results">'+formPlace.map((p,i)=>'<li><button data-pick="'+i+'"><b>'+esc(p.label)+'</b>'+(p.sub?'<small>'+esc(p.sub)+'</small>':'')+'</button></li>').join("")+'</ul>':'<p class="note">見つかりませんでした。店名と地名を組み合わせるか（例：ポプラ 堀江）、地図で指定してください。</p>'):'')
    +'<div class="row2"><button class="btn line" data-a="mappick">地図をタップして指定</button><button class="btn line" data-a="center">今の地図の中心にする</button></div>';
   h+='<label>メモ（任意）<textarea data-f="memo" rows="3" placeholder="例）土日のみ営業、70sデニムが多い">'+esc(f.memo)+'</textarea></label>'
    +'<label>お店のURL・SNS（任意）<input data-f="url" value="'+esc(f.url)+'" placeholder="https://" inputmode="url"></label>'
@@ -390,32 +412,45 @@ function drawForm(){
 function readForm(){if(!form)return;for(const k of ["name","memo","url"]){const el=document.querySelector('#pList [data-f="'+k+'"]');if(el)form[k]=el.value}}
 function openForm(s,at){
   form=s?{...s}:{id:"",name:"",cat:(filter.cat||S.cats[0][0]),went:false,addr:"",lat:null,lng:null,memo:"",url:""};
-  if(at){form.lat=at.lat;form.lng=at.lng;form.addr="地図で指定した場所";showTmp(at)}
-  formPlace=null;closeCard();openPanel("list");drawList();
+  formPlace=null;formQ="";if(at)setLoc({lat:at.lat,lng:at.lng});closeCard();openPanel("list");drawList();
   setTimeout(()=>{const i=document.querySelector('#pList [data-f="name"]');if(i&&!form.name&&!isMobile())i.focus()},60);
 }
 function showTmp(p){if(tmpMk){map.removeLayer(tmpMk);tmpMk=null}if(p)tmpMk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:'<div class="tmp"></div>',iconSize:[22,22],iconAnchor:[11,11]}),interactive:false}).addTo(map)}
 async function placeSearch(q){
   q=String(q||"").trim();if(!q)return [];
-  const r=await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q="+encodeURIComponent(q));const j=await r.json();
-  return (j||[]).slice(0,8).map(f=>({label:f.properties.title,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0]}));
+  const gsi=fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q="+encodeURIComponent(q)).then(r=>r.json()).then(j=>(j||[]).slice(0,5).map(f=>({label:f.properties.title,addr:f.properties.title,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0]}))).catch(()=>null);
+  let vb="";try{const b=map.getBounds();vb="&viewbox="+[b.getWest(),b.getNorth(),b.getEast(),b.getSouth()].map(v=>v.toFixed(4)).join(",")}catch(e){}
+  const osm=fetch(NOMI+"search?format=jsonv2&addressdetails=1&limit=6&countrycodes=jp&accept-language=ja"+vb+"&q="+encodeURIComponent(q)).then(r=>r.json()).then(j=>(j||[]).map(x=>{const ad=jpAddr(x.address);const nm=x.name&&!ad.includes(x.name)?x.name:"";return {label:nm||ad||x.display_name,sub:nm?ad:"",name:nm,addr:ad,lat:+x.lat,lng:+x.lon}})).catch(()=>null);
+  const [g,o]=await Promise.all([gsi,osm]);if(g===null&&o===null)throw new Error("net");
+  const res=[...(o||[]).filter(x=>x.name),...(g||[]),...(o||[]).filter(x=>!x.name)];
+  return res.filter((x,i)=>res.findIndex(y=>Math.abs(y.lat-x.lat)<1e-4&&Math.abs(y.lng-x.lng)<1e-4)===i).slice(0,8);
 }
-async function formSearch(q){readForm();formBusy=true;formPlace=null;drawForm();try{formPlace=await placeSearch(q)}catch(e){formPlace="err"}formBusy=false;drawForm()}
+async function formSearch(q){readForm();formQ=q;const P=parsePaste(q);
+  if(P.name&&!form.name)form.name=P.name;
+  if(P.ll){setLoc(P.ll,P.addr||"");formPlace=null;map.setView([P.ll.lat,P.ll.lng],Math.max(map.getZoom(),16));drawForm();toast("リンクから場所を読み取りました");return}
+  if(P.short){formPlace="short";drawForm();return}
+  formBusy=true;formPlace=null;drawForm();
+  try{let r=await placeSearch(P.q);
+    if(P.addr&&r.length&&form.lat==null){const p=r[0];setLoc(p,P.addr);formPlace=null;formBusy=false;map.setView([p.lat,p.lng],Math.max(map.getZoom(),16));drawForm();toast("貼り付けた内容から登録しました。場所が違えば「変更」");return}
+    formPlace=r}catch(e){formPlace="err"}
+  formBusy=false;drawForm()}
 $("pList").addEventListener("click",e=>{
   const go=e.target.closest("[data-go]");if(go){const s=byId(go.dataset.go);if(s){if(isMobile())setSheet(false);map.setView([s.lat,s.lng],Math.max(map.getZoom(),16));openCard(s.id)}return}
   const c=e.target.closest("[data-cat]");if(c){filter.cat=c.dataset.cat;drawList();drawMarkers();return}
   const st=e.target.closest("[data-st]");if(st){filter.st=st.dataset.st;drawList();drawMarkers();return}
   const fc=e.target.closest("[data-fc]");if(fc){readForm();form.cat=fc.dataset.fc;drawForm();return}
   const fs=e.target.closest("[data-fs]");if(fs){readForm();form.went=fs.dataset.fs==="went";drawForm();return}
-  const pk=e.target.closest("[data-pick]");if(pk){readForm();const p=formPlace[+pk.dataset.pick];form.lat=p.lat;form.lng=p.lng;form.addr=p.label;formPlace=null;showTmp(p);map.setView([p.lat,p.lng],Math.max(map.getZoom(),16));drawForm();return}
+  const pk=e.target.closest("[data-pick]");if(pk){readForm();const p=formPlace[+pk.dataset.pick];if(p.name&&!form.name)form.name=p.name;setLoc(p,p.addr||p.label);formPlace=null;map.setView([p.lat,p.lng],Math.max(map.getZoom(),16));drawForm();return}
   const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a;
   if(a==="new")openForm(null);
   else if(a==="cancel"){form=null;showTmp(null);drawList()}
   else if(a==="search")formSearch(document.querySelector('#pList [data-f="q"]').value);
   else if(a==="replace"){readForm();form.lat=null;form.lng=null;form.addr="";showTmp(null);drawForm()}
-  else if(a==="center"){readForm();const c=map.getCenter();form.lat=c.lat;form.lng=c.lng;form.addr="地図で指定した場所";showTmp(c);drawForm()}
+  else if(a==="center"){readForm();const c=map.getCenter();setLoc({lat:c.lat,lng:c.lng});drawForm()}
+  else if(a==="here"){readForm();formBusy="現在地を取得しています…";drawForm();navigator.geolocation.getCurrentPosition(pos=>{formBusy=false;const p={lat:pos.coords.latitude,lng:pos.coords.longitude};setLoc(p);map.setView([p.lat,p.lng],17);drawForm()},err=>{formBusy=false;drawForm();toast(err.code===1?"位置情報が許可されていません（スマホの設定で許可してください）":"現在地を取得できませんでした")},{enableHighAccuracy:true,timeout:12000,maximumAge:30000})}
   else if(a==="mappick"){readForm();picking=true;if(isMobile())setSheet(false);$("pickbar").classList.add("show");$("map").classList.add("picking")}
   else if(a==="save"){
+    if(form&&form.addr==="住所を調べています…")form.addr="地図で指定した場所";
     readForm();form.name=(form.name||"").trim();form.url=(form.url||"").trim();
     if(!form.name){toast("名前を入れてください");return}
     if(form.lat==null){toast("場所を指定してください");return}
@@ -427,9 +462,11 @@ $("pList").addEventListener("click",e=>{
     const s=byId(id);map.setView([s.lat,s.lng],Math.max(map.getZoom(),16));openCard(id);toast("「"+nm+"」を保存しました");
   }
 });
-$("pList").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches('[data-f="q"]')){e.preventDefault();formSearch(e.target.value)}});
+$("pList").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing&&e.target.matches('[data-f="q"]')){e.preventDefault();formSearch(e.target.value)}});
+// 貼り付けたらすぐ読み取る
+$("pList").addEventListener("paste",e=>{if(e.target.matches('[data-f="q"]'))setTimeout(()=>formSearch(e.target.value),0)});
 function endPick(){picking=false;$("pickbar").classList.remove("show");$("map").classList.remove("picking");if(isMobile())setSheet(true)}
-map.on("click",e=>{if(picking&&form){form.lat=e.latlng.lat;form.lng=e.latlng.lng;form.addr="地図で指定した場所";showTmp(e.latlng);endPick();drawForm();return}closeCard();$("sres").classList.remove("show")});
+map.on("click",e=>{if(picking&&form){setLoc({lat:e.latlng.lat,lng:e.latlng.lng});endPick();drawForm();return}closeCard();$("sres").classList.remove("show")});
 $("pickcancel").addEventListener("click",endPick);
 map.on("contextmenu",e=>{openForm(null,e.latlng);toast("この場所を登録します。名前を入れて保存してください")});
 $("fabAdd").addEventListener("click",()=>openForm(null));
