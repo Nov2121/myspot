@@ -260,6 +260,8 @@ h1{margin:0;font:700 19px/1.3 "Noto Sans JP",sans-serif;letter-spacing:.03em}
 .chips button.on .ci{stroke:#fff!important}.chips button.on .ci .f,.chips button.on .ci .f2,.chips button.on .ci .w{fill:none!important}
 .btn.here{width:100%;margin-top:6px;justify-content:center;font-weight:700;background:var(--soft);border:1.5px solid var(--acc);color:var(--acc-d)}
 .results button b{display:block;font-weight:700}.results button small{display:block;color:var(--mute);font-size:12px;margin-top:1px}
+.howto{margin:6px 0 0;font-size:12px;color:var(--mute)}.howto summary{cursor:pointer;color:var(--acc-d);font-weight:700;padding:4px 0}.howto ol{margin:4px 0;padding-left:20px;line-height:1.7}.howto p{margin:2px 0}
+.note.warn{color:#9a3b12;background:#fff3e8;border-radius:8px;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -364,17 +366,7 @@ function jpAddr(a){if(!a)return "";const k=["province","state","city","town","vi
 async function revGeo(lat,lng){try{const r=await fetch(NOMI+"reverse?format=jsonv2&addressdetails=1&zoom=18&accept-language=ja&lat="+lat+"&lon="+lng);const j=await r.json();return jpAddr(j.address)}catch(e){return ""}}
 // 場所を決めたら住所を自動で入れる（分からなければ「地図で指定した場所」）
 function setLoc(p,addr){const f=form;if(!f)return;f.lat=p.lat;f.lng=p.lng;f.addr=addr||"住所を調べています…";showTmp(p);if(!addr){revGeo(p.lat,p.lng).then(t=>{if(form===f&&f.lat===p.lat&&f.addr==="住所を調べています…"){f.addr=t||"地図で指定した場所";if(document.querySelector("#pList .where")){readForm();drawForm()}}})}}
-// 貼り付けた文章から座標・店名・住所を読み取る
-function parsePaste(t){t=String(t||"").trim();const out={q:t};
-  const m=t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||t.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)||t.match(/[?&](?:q|query|ll|center|destination)=(-?\d+\.\d+)(?:,|%2C)\s*(-?\d+\.\d+)/i)||t.match(/^\s*(-?\d{1,2}\.\d{3,})\s*[, ]\s*(-?\d{2,3}\.\d{3,})\s*$/);
-  if(m){const la=+m[1],ln=+m[2];if(Math.abs(la)<=90&&Math.abs(ln)<=180)out.ll={lat:la,lng:ln}}
-  const pl=t.match(/\/maps\/place\/([^\/@?]+)/);if(pl){try{out.name=decodeURIComponent(pl[1].replace(/\+/g," "))}catch(e){}}
-  const lines=t.split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!/^https?:\/\//.test(x));
-  const ad=lines.find(x=>/〒|\d{3}-\d{4}|(都|道|府|県).+(市|区|町|村|郡)|(市|区).+(町|丁目|\d)/.test(x));
-  if(ad){out.addr=ad.replace(/^〒?\s*\d{3}-?\d{4}\s*/,"").replace(/^日本、?\s*/,"").trim();const nm=lines.find(x=>x!==ad);if(nm&&!out.name)out.name=nm}
-  else if(lines.length>=1&&lines.length<=3&&/https?:\/\//.test(t)&&!out.name)out.name=lines[0];
-  out.short=/https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps)/.test(t)&&!out.ll&&!out.addr&&lines.length===0;
-  out.q=out.addr||lines.join(" ")||out.name||"";return out}
+
 function drawList(){
   $("tot").textContent=S.spots.length;drawGrab();
   if(form)return drawForm();
@@ -400,9 +392,9 @@ function drawForm(){
    +'<div class="lbl">場所</div>';
   if(f.lat!=null)h+='<div class="where"><b>'+esc(f.addr||"地図で指定した場所")+'</b><button class="link" data-a="replace">変更</button></div>';
   else h+=(GEO_OK?'<button class="btn here" data-a="here">📍 今いる場所で登録</button>':'')
-   +'<div class="row2" style="margin-top:6px"><textarea data-f="q" rows="2" placeholder="店名・住所・Googleマップのリンクなどを貼り付け" enterkeyhint="search" style="flex:3;resize:vertical">'+esc(formQ)+'</textarea><button class="btn line" data-a="search">探す</button></div>'
-   +'<p class="note" style="margin:4px 0 0">例）「ポプラ 堀江」「南船場4丁目」／Googleマップの「共有」でコピーした内容をそのまま</p>'
-   +(formBusy?'<p class="note">'+esc(formBusy===true?'検索中…':formBusy)+'</p>':formPlace==="err"?'<p class="note">検索できませんでした（インターネット接続を確認してください）。</p>':formPlace==="short"?'<p class="note">短縮リンク（maps.app.goo.gl）だけでは場所が分かりません。Googleマップでお店を開き「共有」→「コピー」した文章ごと貼るか、店名で探してください。</p>':Array.isArray(formPlace)?(formPlace.length?'<ul class="results">'+formPlace.map((p,i)=>'<li><button data-pick="'+i+'"><b>'+esc(p.label)+'</b>'+(p.sub?'<small>'+esc(p.sub)+'</small>':'')+'</button></li>').join("")+'</ul>':'<p class="note">見つかりませんでした。店名と地名を組み合わせるか（例：ポプラ 堀江）、地図で指定してください。</p>'):'')
+   +'<div class="row2" style="margin-top:6px"><textarea data-f="q" rows="2" placeholder="Googleマップでコピーした住所を貼り付け" enterkeyhint="search" style="flex:3;resize:vertical">'+esc(formQ)+'</textarea><button class="btn line" data-a="search">探す</button></div>'
+   +'<details class="howto"><summary>Googleマップで住所をコピーするには</summary><ol><li>Googleマップでお店を開く</li><li>お店の情報にある<b>住所の行を長押し</b>（Androidはタップでも可）</li><li>「コピー」された住所を、上の欄に貼り付け</li></ol><p>貼り付けると自動で場所が入ります。地名だけ（例：南船場4丁目）でも探せます。</p></details>'
+   +(formBusy?'<p class="note">'+esc(formBusy===true?'検索中…':formBusy)+'</p>':formPlace==="err"?'<p class="note">検索できませんでした（インターネット接続を確認してください）。</p>':formPlace==="short"?'<p class="note warn">リンクからは場所を読み取れません。Googleマップで<b>住所の行を長押ししてコピー</b>し、住所を貼り付けてください。</p>':Array.isArray(formPlace)?(formPlace.length?'<ul class="results">'+formPlace.map((p,i)=>'<li><button data-pick="'+i+'"><b>'+esc(p.label)+'</b>'+(p.sub?'<small>'+esc(p.sub)+'</small>':'')+'</button></li>').join("")+'</ul>':'<p class="note">住所が見つかりませんでした。「〇〇市〇〇町」までに短くするか、地図で指定してください。</p>'):'')
    +'<div class="row2"><button class="btn line" data-a="mappick">地図をタップして指定</button><button class="btn line" data-a="center">今の地図の中心にする</button></div>';
   h+='<label>メモ（任意）<textarea data-f="memo" rows="3" placeholder="例）土日のみ営業、70sデニムが多い">'+esc(f.memo)+'</textarea></label>'
    +'<label>お店のURL・SNS（任意）<input data-f="url" value="'+esc(f.url)+'" placeholder="https://" inputmode="url"></label>'
@@ -416,22 +408,22 @@ function openForm(s,at){
   setTimeout(()=>{const i=document.querySelector('#pList [data-f="name"]');if(i&&!form.name&&!isMobile())i.focus()},60);
 }
 function showTmp(p){if(tmpMk){map.removeLayer(tmpMk);tmpMk=null}if(p)tmpMk=L.marker([p.lat,p.lng],{icon:L.divIcon({className:"",html:'<div class="tmp"></div>',iconSize:[22,22],iconAnchor:[11,11]}),interactive:false}).addTo(map)}
+// Googleマップからコピーした住所を整える（〒・「日本、」・全角数字・建物名など）
+function cleanAddr(t){return String(t||"").normalize("NFKC").replace(/[−‐‑–—ー](?=\d)/g,"-").replace(/^\s*日本[、,]?\s*/,"").replace(/〒?\s*\d{3}-\d{4}\s*/,"").replace(/\s+/g," ").trim()}
+async function gsiSearch(q){const r=await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q="+encodeURIComponent(q));const j=await r.json();return (j||[]).slice(0,8).map(f=>({label:f.properties.title,addr:f.properties.title,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0]}))}
 async function placeSearch(q){
-  q=String(q||"").trim();if(!q)return [];
-  const gsi=fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q="+encodeURIComponent(q)).then(r=>r.json()).then(j=>(j||[]).slice(0,5).map(f=>({label:f.properties.title,addr:f.properties.title,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0]}))).catch(()=>null);
-  let vb="";try{const b=map.getBounds();vb="&viewbox="+[b.getWest(),b.getNorth(),b.getEast(),b.getSouth()].map(v=>v.toFixed(4)).join(",")}catch(e){}
-  const osm=fetch(NOMI+"search?format=jsonv2&addressdetails=1&limit=6&countrycodes=jp&accept-language=ja"+vb+"&q="+encodeURIComponent(q)).then(r=>r.json()).then(j=>(j||[]).map(x=>{const ad=jpAddr(x.address);const nm=x.name&&!ad.includes(x.name)?x.name:"";return {label:nm||ad||x.display_name,sub:nm?ad:"",name:nm,addr:ad,lat:+x.lat,lng:+x.lon}})).catch(()=>null);
-  const [g,o]=await Promise.all([gsi,osm]);if(g===null&&o===null)throw new Error("net");
-  const res=[...(o||[]).filter(x=>x.name),...(g||[]),...(o||[]).filter(x=>!x.name)];
-  return res.filter((x,i)=>res.findIndex(y=>Math.abs(y.lat-x.lat)<1e-4&&Math.abs(y.lng-x.lng)<1e-4)===i).slice(0,8);
+  q=cleanAddr(q);if(!q)return [];
+  // 見つからなければ、建物名→番地の順に後ろを削って探し直す
+  const tries=[q,q.replace(/\s.*$/,""),q.replace(/(\d+丁目|\d+番地?|\d+)[\d\-番地号の\s]*.*$/,"$1"),q.replace(/\d.*$/,"")].filter((x,i,a)=>x&&a.indexOf(x)===i);
+  for(const t of tries){const r=await gsiSearch(t);if(r.length)return r}
+  return [];
 }
-async function formSearch(q){readForm();formQ=q;const P=parsePaste(q);
-  if(P.name&&!form.name)form.name=P.name;
-  if(P.ll){setLoc(P.ll,P.addr||"");formPlace=null;map.setView([P.ll.lat,P.ll.lng],Math.max(map.getZoom(),16));drawForm();toast("リンクから場所を読み取りました");return}
-  if(P.short){formPlace="short";drawForm();return}
+async function formSearch(q){readForm();formQ=q;const t=String(q||"").trim();if(!t)return;
+  if(/https?:\/\//.test(t)&&!/[都道府県市区町村丁]/.test(t.replace(/https?:\/\/\S+/g,""))){formPlace="short";drawForm();return}
+  const addr=cleanAddr(t.replace(/https?:\/\/\S+/g," ").split(/\r?\n/).find(x=>/[都道府県市区町村丁]|\d/.test(x))||t);
   formBusy=true;formPlace=null;drawForm();
-  try{let r=await placeSearch(P.q);
-    if(P.addr&&r.length&&form.lat==null){const p=r[0];setLoc(p,P.addr);formPlace=null;formBusy=false;map.setView([p.lat,p.lng],Math.max(map.getZoom(),16));drawForm();toast("貼り付けた内容から登録しました。場所が違えば「変更」");return}
+  try{const r=await placeSearch(addr);
+    if(r.length&&/[市区町村郡]/.test(addr)){const p=r[0];setLoc(p,addr);formPlace=null;formBusy=false;map.setView([p.lat,p.lng],Math.max(map.getZoom(),16));drawForm();toast("住所から場所を入れました。違っていれば「変更」");return}
     formPlace=r}catch(e){formPlace="err"}
   formBusy=false;drawForm()}
 $("pList").addEventListener("click",e=>{
